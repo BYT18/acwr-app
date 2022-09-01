@@ -47,7 +47,8 @@ const RegisterScreen = ({navigation}) =>{
           name: name,
           email: email.toLowerCase(),
           team: team,
-          status: 'Active'
+          status: 'Active',
+          notiTime: new Date(0, 0, 0, 20, 0, 0, 0)
           //password: password
         });
 

@@ -28,10 +28,11 @@ Notifications.setNotificationHandler({
 async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync(
         {
-          content: {
-            title: 'Remember to report your activity!',
-            //data:{data: }
-          },
+            identifier:'daily',
+            content: {
+                    title: 'Remember to report your activity!',
+                //data:{data: }
+             },
           trigger: {
             //seconds: 60*1,
             hour: parseInt(thisUser.notiTime.toDate().getHours()), 
@@ -217,6 +218,7 @@ const settings = ({navigation}) => {
       };
     
     const updateNoti = async(time) => {
+        //Notifications.cancelAllScheduledNotificationsAsync()
         await updateDoc(doc(db, "users", thisUser.email), {
             notiTime: time
         })
