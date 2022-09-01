@@ -12,6 +12,15 @@
       "backgroundColor": "#ffffff"
     },
     "plugins": [
+      "@react-native-firebase/app",
+      [
+       "expo-build-properties",
+        {
+         "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ],
       [
         "expo-notifications",
         {

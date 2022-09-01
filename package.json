@@ -24,6 +24,7 @@
     "expo": "~45.0.0",
     "expo-av": "~11.2.3",
     "expo-background-fetch": "~10.2.0",
+    "expo-build-properties": "~0.2.0",
     "expo-device": "~4.2.0",
     "expo-linking": "~3.1.0",
     "expo-notifications": "~0.15.4",
