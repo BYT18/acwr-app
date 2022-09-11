@@ -219,7 +219,7 @@ const BodyPage = ({navigation, route}) => {
           renderItem={({ item }) => <InjuryReportComponent part={item.part} sev={item.sev} />}
         />
       </ScrollView>
-      <ScrollView style={[{flex:1}]}>
+      {/* <ScrollView style={[{flex:1}]}>
         <View style={[{flex:1, flexDirection:'row'}]}>
           <View style={[{flex:1, paddingTop: 16, paddingBottom: 16}]}>
             {renderLabel('Select source', isStressFocus)}
@@ -280,7 +280,7 @@ const BodyPage = ({navigation, route}) => {
           // ItemSeparatorComponent={FlatListItemSeparator}
           renderItem={({ item }) => <InjuryReportComponent part={item.part} sev={item.sev} />}
         />
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 };

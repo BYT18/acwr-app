@@ -143,13 +143,13 @@ const App = ({navigation}) => {
           name="Settings" 
           component={Settings} 
         />
-        <Stack.Screen 
+        {/* <Stack.Screen 
           name="ReportTwo" 
           component={ReportTwo} 
           options={({ navigation }) => ({
             headerTitle:'Extra'
           })}
-        />
+        /> */}
         <Stack.Screen 
         name="CoachSettings" 
         component={CoachSettings} 
@@ -160,20 +160,26 @@ const App = ({navigation}) => {
             options={({ navigation }) => ({
               //gestureEnabled: false,
               headerRight: () => (
-                <TouchableOpacity onPress={() => 
-                    //alert('This is a button!')
-                    //navigation.navigate('Register')
-                    navigation.navigate('ReportTwo')
-                    //signOut()
-                  }
-                  //style={{alignItems:'flex-end', justifyContent:''}}
-                >
-                  <View style={{flexDirection:'row', alignItems:'center'}}>
-                    {/*<Text>More</Text>*/}
-                    <MaterialIcons name='arrow-right' size={35} color="black">
-                    </MaterialIcons>
-                  </View>
-                </TouchableOpacity>
+                <Button
+                title='Submit'
+                onPress={() => 
+                alert('This is a button')
+                }
+                />
+                // <TouchableOpacity onPress={() => 
+                //     //alert('This is a button!')
+                //     //navigation.navigate('Register')
+                //     navigation.navigate('ReportTwo')
+                //     //signOut()
+                //   }
+                //   //style={{alignItems:'flex-end', justifyContent:''}}
+                // >
+                //   <View style={{flexDirection:'row', alignItems:'center'}}>
+                //     <Text style={styles.submitbutton}>Submit</Text>
+                //     {/* <MaterialIcons name='arrow-right' size={35} color="black">
+                //     </MaterialIcons> */}
+                //   </View>
+                // </TouchableOpacity>
               ),
             })}
         />
@@ -192,6 +198,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  submitbutton: {
+    fontWeight: '700',
   },
 });
 

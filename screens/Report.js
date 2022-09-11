@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useState, useRef} from 'react';
-import { StyleSheet, Pressable, Text, View, SafeAreaView, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Dimensions, ScrollView} from 'react-native';
+import React, { useLayoutEffect, useState, useRef, useEffect} from 'react';
+import { StyleSheet, Pressable, FlatList, Text, View, SafeAreaView, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard, Dimensions, ScrollView} from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //import TimeRangeSlider from 'react-time-range-slider';
@@ -13,6 +13,9 @@ import { Ionicons } from '@expo/vector-icons';
 import {db} from "./Firebase";
 import {collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"; 
 import { thisUser } from './homeNav';
+import BodyPage from './BodyPage';
+import { Dropdown } from 'react-native-element-dropdown';
+import InjuryReportComponent from '../components/InjuryReportComponent';
 
 
 const textTransformerTimes = (value) => {
@@ -43,6 +46,40 @@ function report({navigation, route}) {
     const { min, max } = TIME;
     const [width, setWidth] = useState(280);
     const [selected, setSelected] = useState(null);
+    const data = [
+        { label: 'Hips', value: 'Hips'},
+        { label: 'Hamstring', value: 'Hamstring' },
+        { label: 'Quad', value: 'Quad' },
+        { label: 'Glute', value: 'Glute' },
+        { label: 'Ankle', value: 'Ankle' },
+        { label: 'Foot', value: 'Foot' },
+        { label: 'Upper Body', value: 'Upper Body' },
+        { label: 'Lower Body', value: 'Lower Body' },
+      ];
+      const [value, setValue] = useState(null);
+      const [isFocus, setIsFocus] = useState(false);
+      const [stressValue, setStressValue] = useState(null);
+      const [isStressFocus, setStressIsFocus] = useState(false);
+      const [injurySlide, onInjurySlide] = React.useState(0.5);
+      const [stressSlide, onStressSlide] = React.useState(0.5);
+      const [injuries, setInjuries] = useState([]);
+      const [stresses, setStresses] = useState([]);
+
+      const renderLabel = (label, foc) => {
+        if (value || foc) {
+          return (
+            <Text style={[styles.label, foc && { color: 'blue' }]}>
+              {label}
+            </Text>
+          );
+        }
+        return null;
+      };
+    
+      const updateInj = () => {
+        setInjuries(arr => [...arr, {part: value, sev: injurySlide}]) 
+        console.log('timelist' + injuries.length)
+      }
   
     // Callbacks
     const onLayout = (event) => {
@@ -146,6 +183,30 @@ function report({navigation, route}) {
            )
        })*/
     })
+
+    useEffect(() => {
+        if (route.params == null){
+          const nowDate = new Date()
+          nowDate.setHours(0, 0, 0, 0)
+          setDoc(doc(db, "users", thisUser.email, 'injury', nowDate.toString()), {
+            data: injuries
+          })
+    
+          setDoc(doc(db, "users", thisUser.email, 'stress', nowDate.toString()), {
+            data: stresses
+          })
+        } else{
+          const nowDate  = route.params.date;
+          nowDate.setHours(0, 0, 0, 0)
+          setDoc(doc(db, "users", thisUser.email, 'injury', nowDate.toString()), {
+            data: injuries
+          })
+    
+          setDoc(doc(db, "users", thisUser.email, 'stress', nowDate.toString()), {
+            data: stresses
+          })
+        }
+      }, [injuries, stresses]);
 
     const submit = () =>{
         //setDoc(doc(db, "cities", "new-city-id"), data);
@@ -437,6 +498,7 @@ function report({navigation, route}) {
     return (
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
             {/*<DatePicker date={date} onDateChange={setDate} />*/}
+            <ScrollView>
             <KeyboardAvoidingView
             keyboardVerticalOffset = {1}
             behavior='position'
@@ -468,7 +530,7 @@ function report({navigation, route}) {
                                     {Math.round((slide+Number.EPSILON)*100)/100} 
                                 </Text>
                                 <Slider
-                                    style={{width: 200}}
+                                    style={{width: 280}}
                                     minimumValue={1}
                                     maximumValue={10}
                                     step = {1}
@@ -517,7 +579,7 @@ function report({navigation, route}) {
                                 />*/}
                             </View>
                         </View>
-                        <View style={{flex: 2, flexDirection: "column",
+                        <View style={{flex: 1, flexDirection: "column",
                                             paddingHorizontal: 10}}>
                                     <Text style = {[styles.titleText]}>
                                         Description 
@@ -554,7 +616,7 @@ function report({navigation, route}) {
                             </View>
                         <View style={{ flex: 0.5, justifyContent:"flex-end"}}>
                             <View style={{ flex:1, flexDirection:'row'}}>
-                            <TouchableOpacity
+                            {/* <TouchableOpacity
                                 style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7}]}
                                     //onPress={() => {
                                     //    setModalVisible(true)     
@@ -567,21 +629,84 @@ function report({navigation, route}) {
                                 <Text style = {[styles.buttonText]}>
                                     Submit <Ionicons name="enter-outline" size={20} color="black" />
                                 </Text>
-                            </TouchableOpacity>
-                        
-                            {/* <TouchableOpacity
-                                style={[{ opacity: 1 }, {backgroundColor: 'black', height:40, flex:1}]}
-                                onPress={() => navigation.navigate('ReportTwo')}
-                            >
-                                <Text style = {[styles.buttonText]}>
-                                    {showDate()}
-                                </Text>
                             </TouchableOpacity> */}
-                            </View>
+                        
+        
+         
+            <ScrollView style={[{paddingHorizontal: 12, flex:1}]}>
+        <View style={[{flex:1, flexDirection:'collumn'}]}>
+        <Text style = {[styles.titleText]}>
+                                        Injuries
+                                    </Text>
+          <View style={[{flex:1, paddingTop: 16, paddingBottom: 8}]}>
+            
+            {renderLabel('Select area', isFocus)}
+            <Dropdown
+              style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={data}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={!isFocus ? 'Injury Report' : '...'}
+              searchPlaceholder="Search..."
+              value={value}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              onChange={item => {
+                setValue(item.value);
+                setIsFocus(false);
+              }}
+              renderLeftIcon={() => (
+                <MaterialIcons
+                  style={styles.icon}
+                  color={isFocus ? 'blue' : 'black'}
+                  name="person"
+                  size={20}
+                />
+              )}
+            />
+          </View>
+          
+        </View>
+        <Text style={{alignSelf:'center', paddingTop:25, paddingBottom:10}}>Severity: {slide}</Text>
+        <Slider
+          style={{width: 300, alignSelf:'center'}}
+          minimumValue={0.5}
+          maximumValue={10}
+          step = {0.5}
+          value = {slide}
+          minimumTrackTintColor="red"
+          //maximumTrackTintColor="limegreen"
+          onValueChange={onInjurySlide}
+          tapToSeek
+          //thumbTintColor = 'dodgerblue'
+        />
+        <View style={[{flex:1, marginVertical:10, paddingLeft:5, paddingTop: 16, marginHorizontal: 20}]}>
+            <TouchableOpacity onPress={() => updateInj()} activeOpacity={0.7} style={[styles.saveButton,{backgroundColor: value == null ? 'grey' : 'black'}]} disabled={value == null ? true : false}>
+              <Text style={{color:'white', alignSelf:'center', fontSize:16, fontWeight:'700'}}> Add Injury </Text>
+            </TouchableOpacity>
+          </View>
+        <FlatList
+          data={injuries}
+          width='100%'
+          //extraData={this.state.arrayHolder}
+          keyExtractor={(index) => index.toString()}
+          // ItemSeparatorComponent={FlatListItemSeparator}
+          renderItem={({ item }) => <InjuryReportComponent part={item.part} sev={item.sev} />}
+        />
+      </ScrollView>
+    
+                         </View>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -733,6 +858,64 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    dropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+      },
+      icon: {
+        marginRight: 5,
+      },
+      label: {
+        position: 'absolute',
+        backgroundColor: 'white',
+        left: 22,
+        top: 8,
+        zIndex: 999,
+        paddingHorizontal: 8,
+        fontSize: 14,
+      },
+      placeholderStyle: {
+        fontSize: 16,
+      },
+      selectedTextStyle: {
+        fontSize: 16,
+      },
+      iconStyle: {
+        width: 20,
+        height: 20,
+      },
+      inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+      },
+      saveButton: {
+        backgroundColor: '#000',
+        justifyContent: 'center',
+        //marginRight: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        borderRadius: 10,
+        height: 60,
+        marginHorizontal: 10,
+        marginVertical: 10,
+      },
+      listItem: {
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+        alignSelf: 'center',
+        backgroundColor: 'grey',
+        borderRadius: 10,
+      },
 });
 
 export default report;
