@@ -65,6 +65,7 @@ function report({navigation, route}) {
       const [injuries, setInjuries] = useState([]);
       const [stresses, setStresses] = useState([]);
 
+
       const renderLabel = (label, foc) => {
         if (value || foc) {
           return (
@@ -185,7 +186,6 @@ function report({navigation, route}) {
     })
 
     useEffect(() => {
-        if (route.params == null){
           const nowDate = new Date()
           nowDate.setHours(0, 0, 0, 0)
           setDoc(doc(db, "users", thisUser.email, 'injury', nowDate.toString()), {
@@ -195,17 +195,7 @@ function report({navigation, route}) {
           setDoc(doc(db, "users", thisUser.email, 'stress', nowDate.toString()), {
             data: stresses
           })
-        } else{
-          const nowDate  = route.params.date;
-          nowDate.setHours(0, 0, 0, 0)
-          setDoc(doc(db, "users", thisUser.email, 'injury', nowDate.toString()), {
-            data: injuries
-          })
-    
-          setDoc(doc(db, "users", thisUser.email, 'stress', nowDate.toString()), {
-            data: stresses
-          })
-        }
+        
       }, [injuries, stresses]);
 
     const submit = () =>{
@@ -498,13 +488,10 @@ function report({navigation, route}) {
     return (
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
             {/*<DatePicker date={date} onDateChange={setDate} />*/}
-            <ScrollView>
-            <KeyboardAvoidingView
-            keyboardVerticalOffset = {1}
-            behavior='position'
-            //behavior={Platform.OS === "ios" ? "padding" : "height"}
-            //style={styles.container}
-            style={{flexDirection: "column", alignItems: 'center'}}
+            <ScrollView
+    
+           
+            //style={{flexDirection: "column", alignItems: 'center'}}
             >
                 <TouchableWithoutFeedback
                    onPress={Keyboard.dismiss}
@@ -673,13 +660,13 @@ function report({navigation, route}) {
           </View>
           
         </View>
-        <Text style={{alignSelf:'center', paddingTop:25, paddingBottom:10}}>Severity: {slide}</Text>
+        <Text style={{alignSelf:'center', paddingTop:25, paddingBottom:10}}>Severity: {injurySlide}</Text>
         <Slider
           style={{width: 300, alignSelf:'center'}}
           minimumValue={0.5}
           maximumValue={10}
           step = {0.5}
-          value = {slide}
+          value = {injurySlide}
           minimumTrackTintColor="red"
           //maximumTrackTintColor="limegreen"
           onValueChange={onInjurySlide}
@@ -699,13 +686,27 @@ function report({navigation, route}) {
           // ItemSeparatorComponent={FlatListItemSeparator}
           renderItem={({ item }) => <InjuryReportComponent part={item.part} sev={item.sev} />}
         />
+        <TouchableOpacity
+                    style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7}]}
+                        //onPress={() => {
+                        //    setModalVisible(true)     
+                        //    }}
+                    //onPress = {submit}
+                    onPress = {
+                        () => updateData()
+                    }
+                >
+                    <Text style = {[styles.buttonText]}>
+                        Submit <Ionicons name="enter-outline" size={20} color="black" />
+                    </Text>
+                </TouchableOpacity>
       </ScrollView>
     
                          </View>
                         </View>
                     </View>
                 </TouchableWithoutFeedback>
-            </KeyboardAvoidingView>
+       
             </ScrollView>
         </SafeAreaView>
     );

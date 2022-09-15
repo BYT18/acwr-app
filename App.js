@@ -159,28 +159,28 @@ const App = ({navigation}) => {
             component={Report} 
             options={({ navigation }) => ({
               //gestureEnabled: false,
-              headerRight: () => (
-                <Button
-                title='Submit'
-                onPress={() => 
-                alert('This is a button')
-                }
-                />
-                // <TouchableOpacity onPress={() => 
-                //     //alert('This is a button!')
-                //     //navigation.navigate('Register')
-                //     navigation.navigate('ReportTwo')
-                //     //signOut()
-                //   }
-                //   //style={{alignItems:'flex-end', justifyContent:''}}
-                // >
-                //   <View style={{flexDirection:'row', alignItems:'center'}}>
-                //     <Text style={styles.submitbutton}>Submit</Text>
-                //     {/* <MaterialIcons name='arrow-right' size={35} color="black">
-                //     </MaterialIcons> */}
-                //   </View>
-                // </TouchableOpacity>
-              ),
+              // headerRight: () => (
+              //   <Button
+              //   title='Submit'
+              //   onPress={() => 
+              //   alert('This is a button')
+              //   }
+              //   />
+              //   // <TouchableOpacity onPress={() => 
+              //   //     //alert('This is a button!')
+              //   //     //navigation.navigate('Register')
+              //   //     navigation.navigate('ReportTwo')
+              //   //     //signOut()
+              //   //   }
+              //   //   //style={{alignItems:'flex-end', justifyContent:''}}
+              //   // >
+              //   //   <View style={{flexDirection:'row', alignItems:'center'}}>
+              //   //     <Text style={styles.submitbutton}>Submit</Text>
+              //   //     {/* <MaterialIcons name='arrow-right' size={35} color="black">
+              //   //     </MaterialIcons> */}
+              //   //   </View>
+              //   // </TouchableOpacity>
+              // ),
             })}
         />
     {/*<View style={styles.container}>
