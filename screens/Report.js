@@ -498,17 +498,6 @@ function report({navigation, route}) {
                 >
                     <View  style={{flex: 1}}>
                         <View style={{ flex: 1}}>
-                            <View style={[{flexDirection: "row", justifyContent: "space-around"}]}>
-                                {/*<Text style = {[styles.text]}>
-                                    Current Status: {Math.round(data.acwr[data.acwr.length - 1] * 100) / 100}
-                                </Text>*/}
-                                <Text style = {[styles.text]}>
-                                                                Current Status: {displayACWR}
-                                </Text>
-                                <Text style = {[styles.text]}>
-                                    Weekly Target: 1.2
-                                </Text>
-                            </View>
                             <View style={{flex: 1, alignItems: 'center', marginVertical: 10,}}>
                                 {/*<Text style = {[styles.text]}>
                                     Up Next?: Competiton Tuesday 
@@ -686,6 +675,21 @@ function report({navigation, route}) {
           // ItemSeparatorComponent={FlatListItemSeparator}
           renderItem={({ item }) => <InjuryReportComponent part={item.part} sev={item.sev} />}
         />
+        <TouchableOpacity
+                    style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, padding: 10}]}
+                        //onPress={() => {
+                        //    setModalVisible(true)     
+                        //    }}
+                    //onPress = {submit}
+                    onPress = {
+                        () => {injuries.pop()
+                        setInjuries(injuries)}
+                    }
+                >
+                    <Text style = {[styles.buttonText]}>
+                        Remove Injury <Ionicons name="enter-outline" size={20} color="black" />
+                    </Text>
+        </TouchableOpacity>
         <TouchableOpacity
                     style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7}]}
                         //onPress={() => {
