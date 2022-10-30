@@ -362,10 +362,10 @@ function Home({navigation, route}) {
                     />
                 </View>
                 {/*<InNav style={{  alignSelf:'center'}} image={require('../assets/goals.jpg')} text='View Goals'/>*/}
-                <InNav image={require('../assets/workout.jpg')} text='View Workout Plan' 
+                {/* <InNav image={require('../assets/workout.jpg')} text='View Workout Plan' 
                 onPress={() => openLink()}
                 //onPress={() => removePushTokenSubscription(isRegistered)}
-                />
+                /> */}
                 
             </View>
             </ScrollView>

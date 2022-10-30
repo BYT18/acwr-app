@@ -230,7 +230,7 @@ const settings = ({navigation}) => {
         console.log(thisUser.notiTime.toDate().getMinutes()+'gooobgalab')
     }
     
-    const [date, setDate] = useState(thisUser.notiTime.toDate());
+    // const [date, setDate] = useState(thisUser.notiTime.toDate());
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate;
         console.log(currentDate+'gagaga'+thisUser.notiTime.toDate().getHours())
@@ -425,12 +425,12 @@ const settings = ({navigation}) => {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>                            
-                            <RNDateTimePicker
+                            {/* <RNDateTimePicker
                                 style={{marginBottom: 10,}}
                                 value={date}
                                 mode="time"
                                 onChange={onChange}
-                            />
+                            /> */}
                             <Pressable
                                 style={({ pressed }) => [
                                     {

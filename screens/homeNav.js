@@ -165,7 +165,7 @@ function homeNav() {
         }}
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
       />
-      <Stack.Screen 
+      {/* <Stack.Screen 
         name="Share" 
         component={share} 
         options={{
@@ -177,7 +177,7 @@ function homeNav() {
           ),
         }}
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
-      />
+      /> */}
      
       {/*<Stack.Screen 
         name="Settings" 
