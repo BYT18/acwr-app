@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "180271356910",
+    "firebase_url": "https://acwr-2b24a-default-rtdb.firebaseio.com",
+    "project_id": "acwr-2b24a",
+    "storage_bucket": "acwr-2b24a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180271356910:android:5c467ac9d23fd5342a0cff",
+        "android_client_info": {
+          "package_name": "com.acwr.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180271356910-c26o2bf13vo3hmug1sjdkdnn3plea3pn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP5FPR8lMkFGkoFIa5Acb9frKcBzTt7VQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180271356910-c26o2bf13vo3hmug1sjdkdnn3plea3pn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "180271356910-kg2364chm87tc7ml4rvlksmgn0q42b5e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.acwr.acwrapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

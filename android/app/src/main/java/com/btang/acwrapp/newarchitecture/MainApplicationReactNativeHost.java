@@ -1,4 +1,4 @@
-package com.acwrapp.newarchitecture;
+package com.btang.acwrapp.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.acwrapp.BuildConfig;
-import com.acwrapp.newarchitecture.components.MainComponentsRegistry;
-import com.acwrapp.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.btang.acwrapp.BuildConfig;
+import com.btang.acwrapp.newarchitecture.components.MainComponentsRegistry;
+import com.btang.acwrapp.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
