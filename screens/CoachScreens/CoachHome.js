@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
-import { StyleSheet, Button, Text, View, SafeAreaView, Platform, TouchableOpacity, Pressable, FlatList, RefreshControl, Dimensions, ScrollView} from 'react-native';
+import { StyleSheet, Button, Text, View, SafeAreaView, Platform, TouchableOpacity, Pressable, FlatList, RefreshControl, Dimensions, ScrollView, ActivityIndicator} from 'react-native';
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc} from "firebase/firestore"; 
 import { auth, db } from '../Firebase';
 import { useIsFocused } from '@react-navigation/native'
@@ -28,11 +28,12 @@ const SLIDER_WIDTH = Dimensions.get('window').width + 80
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.75)
 
 function CoachHome({navigation, route}) {
-    console.log(athletes)
+    //console.log(athletes[2].email)
   const [carInd, setCarInd] = useState(0);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [clickedPerson, setClickedPerson] = React.useState('');
+  const [isLoading, setIsLoading] = useState(true);
   
   const renderLabel = (label, foc) => {
     if (value || foc) {
@@ -47,8 +48,28 @@ function CoachHome({navigation, route}) {
   
   const isFocused = useIsFocused()
   useEffect(() => {
+    //getLab(athletes[2].email)
+    //getDat(athletes[2].email)
+    graphData = graphData
+    graphLabels = graphLabels
     global.data = global.data
   }, [isFocused]);
+
+    const getLab = async(email) => {
+        const docRef = doc(db, "users", email, 'data', 'acwr');
+        const docSnap = await getDoc(docRef);
+        console.log(docSnap.data().dates + 'datasss')
+        graphLabels = chartLabels(docSnap.data().dates)
+        return docSnap.data().dates
+    }
+
+    const getDat = async(email) => {
+        const docRef = doc(db, "users", email, 'data', 'acwr');
+        const docSnap = await getDoc(docRef);
+        graphData = docSnap.data().values
+        setIsLoading(false)
+        return docSnap.data().values
+    }
 
     const chartLabels = () => {
         if ( global.data.date.length < 7){
@@ -180,12 +201,15 @@ function CoachHome({navigation, route}) {
                         valueField="name"
                         placeholder={!isFocus ? 'Athlete' : '...'}
                         searchPlaceholder="Search..."
-                        //value={displayName}
+                        //value={emi}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
+                            console.log(item.email)
                             setValue(item.value);
                             setIsFocus(false);
+                            getLab(item.email)
+                            getDat(item.email)
                         }}
                         renderLeftIcon={() => (
                             <MaterialIcons
@@ -238,7 +262,7 @@ function CoachHome({navigation, route}) {
                         <Text style={styles.modalText}>{clickedPerson}</Text>
                         <Text style={styles.modalText}>Projected</Text>
                         <Text style={styles.modalText}>Target</Text>
-                       
+                        {!isLoading ? (
                         <View>
                             <LineChart
                         data={{
@@ -282,6 +306,9 @@ function CoachHome({navigation, route}) {
                         }}
                         />
                         </View>
+                        ) : (
+                            <ActivityIndicator size="large" animating={true} color = 'gray' style={{paddingBottom:10}}/>
+                        )}
                         
                         
                         <Pressable
@@ -290,7 +317,7 @@ function CoachHome({navigation, route}) {
                                 //setModalVisible(!modalVisible)
                                 graphData = []
                                 graphLabels = []
-                                //setIsLoading(true)
+                                setIsLoading(true)
                             }
                             }
                         >

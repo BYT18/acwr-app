@@ -68,11 +68,8 @@ function CoachHomeNav() {
       //athletes.push('text')
     });
     athletes = players
-    for (let i = 0; i < athletes.length; i++) {
-      const querySnapshot = await getDocs(collection(db, "teams", team, 'athletes'));
-      athList.push(athlete)
-      }
   }
+
 
   const getData = async () => {
     try {
