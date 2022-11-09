@@ -241,7 +241,6 @@ function report({navigation, route}) {
             //global.data.goals = JSON.parse(jsonValue).goals
             onChangeACWR(Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100)
             console.log(global.data)
-            
             //updateDaily()
             //updateData()
             //storeData({time: [], acute:[], chronic :[], date:[], percieved: [], acwr:[]})
@@ -339,9 +338,10 @@ function report({navigation, route}) {
                 acwr: acwrNew, 
                 name: thisUser.name
             })
-            updateDoc(doc(db, "users", email, 'data', 'acwr'), {
+            updateDoc(doc(db, "users", thisUser.email, 'data', 'acwr'), {
                 values: arrayUnion(acwrNew),
-                dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate())
+                dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()),
+                comments: arrayUnion(comm)
             })
         }
         else{

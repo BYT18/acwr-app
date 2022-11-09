@@ -24,6 +24,7 @@ import { athletes, athList } from './CoachHomeNav';
 var goals = []
 var graphLabels = []
 var graphData = []
+var comments = []
 const SLIDER_WIDTH = Dimensions.get('window').width + 80
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.75)
 
@@ -67,6 +68,8 @@ function CoachHome({navigation, route}) {
         const docRef = doc(db, "users", email, 'data', 'acwr');
         const docSnap = await getDoc(docRef);
         graphData = docSnap.data().values
+        comments = docSnap.data().comments
+        console.log(comments)
         setIsLoading(false)
         return docSnap.data().values
     }
@@ -260,8 +263,6 @@ function CoachHome({navigation, route}) {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>{clickedPerson}</Text>
-                        <Text style={styles.modalText}>Projected</Text>
-                        <Text style={styles.modalText}>Target</Text>
                         {!isLoading ? (
                         <View>
                             <LineChart
@@ -309,8 +310,6 @@ function CoachHome({navigation, route}) {
                         ) : (
                             <ActivityIndicator size="large" animating={true} color = 'gray' style={{paddingBottom:10}}/>
                         )}
-                        
-                        
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => {
@@ -323,6 +322,13 @@ function CoachHome({navigation, route}) {
                         >
                             <Text style={styles.textStyle}>Close</Text>
                         </Pressable>
+                    </View>
+                    <View>
+                        <Text style={styles.modalText}>Comments</Text>
+                        { comments.map((item, key)=>(
+                        <Text key={key} style={styles.TextStyle}> { item } </Text>)
+                        )}
+                        <Text style={styles.modalText}>Target</Text>
                     </View>
                 </View>
             </ScrollView>
