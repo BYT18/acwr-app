@@ -157,9 +157,9 @@ function report({navigation, route}) {
         }*/
         console.log(global.data.date.indexOf(showDate()))
         if (global.data.date.indexOf(showDate()) == -1){
-            goalVar = 'I hope to...'
-            commVar = 'What did I notice...'
-            descVar = 'What did I do today...'
+            goalVar = ''
+            commVar = ''
+            descVar = ''
             if (!selected) {
                 setSelected([min, max]);
             }
@@ -501,11 +501,7 @@ function report({navigation, route}) {
     return (
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
             {/*<DatePicker date={date} onDateChange={setDate} />*/}
-            <ScrollView
     
-           
-            //style={{flexDirection: "column", alignItems: 'center'}}
-            >
                 <TouchableWithoutFeedback
                    onPress={Keyboard.dismiss}
                 >
@@ -569,14 +565,14 @@ function report({navigation, route}) {
           onComplete={setPerceivedLoad}
           width={50}
           height={300}
-          step={1}
+          step={0.5}
           borderRadius={5}
           minimumTrackTintColor={loadbarColor(perceivedLoad)}
           maximumTrackTintColor={"#ffffff"}
           ballIndicatorColor={"black"}
           ballIndicatorTextColor={"white"}
         />
-        <Text style={[{textAlign: 'center', fontSize: 17, fontWeight: "800"}]}>
+        <Text style={[{textAlign: 'center', fontSize: 17, fontWeight: "800", paddingVertical: 10}]}>
             {perceivedLoad}
         </Text>
         </View>
@@ -594,18 +590,20 @@ function report({navigation, route}) {
           onComplete={setDuration}
           width={50}
           height={300}
-          step={1}
+          step={0.5}
           borderRadius={5}
           minimumTrackTintColor={"black"}
           maximumTrackTintColor={"white"}
         />
-        <Text style={[{textAlign: 'center', fontSize: 17, fontWeight: "800"}]}>
-            {duration}
+        <Text style={[{textAlign: 'center', fontSize: 17, fontWeight: "800", paddingVertical: 10}]}>
+            {duration} hrs
         </Text>
         </View>
         </View>
                             </View>
                         </View>
+                        <ScrollView style={{flex: 1, flexDirection: "column",
+                                            paddingHorizontal: 20, paddingTop: 100}}>
                         <View style={{flex: 1, flexDirection: "column",
                                             paddingHorizontal: 10}}>
                                     <Text style = {[styles.titleText]}>
@@ -660,7 +658,7 @@ function report({navigation, route}) {
                         
         
          
-            <ScrollView style={[{paddingHorizontal: 12, flex:1}]}>
+            {/* <ScrollView style={[{paddingHorizontal: 12, flex:1}]}>
         <View style={[{flex:1, flexDirection:'collumn'}]}>
         <Text style = {[styles.titleText]}>
                                         Injuries
@@ -756,14 +754,29 @@ function report({navigation, route}) {
                         Submit <Ionicons name="enter-outline" size={20} color="black" />
                     </Text>
                 </TouchableOpacity>
-      </ScrollView>
+      </ScrollView> */}
+
+<TouchableOpacity
+                    style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7}]}
+                        //onPress={() => {
+                        //    setModalVisible(true)     
+                        //    }}
+                    //onPress = {submit}
+                    onPress = {
+                        () => updateData()
+                    }
+                >
+                    <Text style = {[styles.buttonText]}>
+                        Submit <Ionicons name="enter-outline" size={20} color="black" />
+                    </Text>
+                </TouchableOpacity>
     
                          </View>
                         </View>
+                        </ScrollView>
                     </View>
+                
                 </TouchableWithoutFeedback>
-       
-            </ScrollView>
         </SafeAreaView>
     );
 }
