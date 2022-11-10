@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CoachShare from './CoachShare'
 import CoachCalendar from './CoachCalendar';
+import CoachHome from './CoachHome';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import CoachSettings from './CoachSettings';
@@ -16,6 +17,7 @@ import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getD
 const Stack = createMaterialBottomTabNavigator();
 var thisUser = {name: '', email: '', acwr: null, team:'', teamID: ''}
 var athletes = []
+var athList = []
 
 function CoachHomeNav() {
   const[email, setEmail] = useState('');
@@ -68,6 +70,7 @@ function CoachHomeNav() {
     athletes = players
   }
 
+
   const getData = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem('@storage_Key')
@@ -92,6 +95,19 @@ function CoachHomeNav() {
       activeColor="black"
       barStyle={{ backgroundColor: 'white' }}
     >
+      <Stack.Screen 
+        name="Home" 
+        component={CoachHome} 
+        options={{
+          // unmountOnBlur: true,
+          tabBarLabel: 'Home',
+          tabBarColor:'white',
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name='home' size={24} color={color}></MaterialIcons>
+          ),
+        }}
+        listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
+      />
       <Stack.Screen 
         name="Calendar" 
         component={CoachCalendar} 
@@ -132,5 +148,5 @@ container: {
 },
 });
 
-export {athletes, thisUser}
+export {athletes, thisUser, athList}
 export default CoachHomeNav
