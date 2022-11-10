@@ -60,7 +60,8 @@
     "react-native-wheel-picker-simple": "^2.0.5",
     "react-native-wheel-scrollview-picker": "^2.0.1",
     "react-navigation-stack": "^2.10.4",
-    "react-time-range-slider": "^1.1.2"
+    "react-time-range-slider": "^1.1.2",
+    "rn-vertical-slider": "^2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
