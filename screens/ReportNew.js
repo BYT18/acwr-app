@@ -16,7 +16,17 @@ import { thisUser } from './homeNav';
 import BodyPage from './BodyPage';
 import { Dropdown } from 'react-native-element-dropdown';
 import InjuryReportComponent from '../components/InjuryReportComponent';
+import VerticalSlider from 'rn-vertical-slider'
 
+const loadbarColor = (value) => {
+    if (0 <= value && value <= 3.5) {
+        return '#ffffff'
+      } else if (3.5 < value && value <= 7.5) {
+          return '#f5a3af'
+      } else {
+        return '#e82d49'
+      }
+  }
 
 const textTransformerTimes = (value) => {
     if (value == 0){
@@ -45,6 +55,8 @@ const textTransformerTimes = (value) => {
 function report({navigation, route}) {
     const { min, max } = TIME;
     const [width, setWidth] = useState(280);
+    const [perceivedLoad, setPerceivedLoad] = useState(5);
+    const [duration, setDuration] = useState(5);
     const [selected, setSelected] = useState(null);
     const data = [
         { label: 'Hips', value: 'Hips'},
@@ -164,6 +176,7 @@ function report({navigation, route}) {
         }
     }
     editData()
+
 
     const [desc, onChangeDesc] = React.useState(descVar);
     const [comm, onChangeComm] = React.useState(commVar);
@@ -488,24 +501,19 @@ function report({navigation, route}) {
     return (
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
             {/*<DatePicker date={date} onDateChange={setDate} />*/}
-            <ScrollView
-    
-           
-            //style={{flexDirection: "column", alignItems: 'center'}}
-            >
                 <TouchableWithoutFeedback
                    onPress={Keyboard.dismiss}
                 >
-                    <View  style={{flex: 1}}>
+                    <ScrollView  style={{flex: 1}}>
                         <View style={{ flex: 1}}>
                             <View style={{flex: 1, alignItems: 'center', marginVertical: 10,}}>
                                 {/*<Text style = {[styles.text]}>
                                     Up Next?: Competiton Tuesday 
                                 </Text>*/}
-                                <Text style = {[styles.text]}>
-                                    {"Percieved Load: " + Math.round((slide+Number.EPSILON)*100)/100} 
-                                </Text>
-                                <Slider
+                                {/* <Text style = {[styles.text]}>
+                                    {Math.round((slide+Number.EPSILON)*100)/100} 
+                                </Text> */}
+                                {/* <Slider
                                     style={{width: 280}}
                                     minimumValue={1}
                                     maximumValue={10}
@@ -517,9 +525,7 @@ function report({navigation, route}) {
                                     tapToSeek
                                     //thumbTintColor = 'dodgerblue'
                                 />
-                               <Text style = {[styles.text,{paddingBottom:15}]}>
-                                    {"Duration:"} 
-                                </Text>
+                               
                                <MultiSlider
                                     min={min}
                                     max={max}
@@ -541,22 +547,62 @@ function report({navigation, route}) {
                                     unselectedStyle={{
                                         backgroundColor: "#EEF3F7",
                                     }}
-                                />
-                                {/*<CircleSlider
-                                    dialRadius={60}
-                                    btnRadius={25}
-                                    textSize={1}
-                                    strokeWidth={5}
-                                    meterColor={'dodgerblue'}
-                                    strokeColor={'#e1e1e1'}
-                                    onValueChange={onChangeTime}
-                                    //value = {onChangeTime}
-                                    //onValueChange = {time}
-                                    value = {wheelVar}
-                                    max = {360} 
-                                />*/}
-                            </View>
+                                /> */}
+
+
+                <View style={[{flexDirection: 'row'}]}>
+                    <View style={[{alignItems: 'center', paddingVertical: 10, marginLeft: -20}]}>
+                        <Text style={[{textAlign: 'center', fontSize: 17, fontWeight: "800", paddingBottom: 10}]}>
+                            Perceived Load
+                        </Text>
+                        <VerticalSlider
+                        value={perceivedLoad}
+                        disabled={false}
+                        min={1}
+                        max={10}
+                        onChange={setPerceivedLoad}
+                        onComplete={setPerceivedLoad}
+                        width={50}
+                        height={300}
+                        step={0.5}
+                        borderRadius={5}
+                        minimumTrackTintColor={loadbarColor(perceivedLoad)}
+                        maximumTrackTintColor={"#ffffff"}
+                        ballIndicatorColor={"black"}
+                        ballIndicatorTextColor={"white"}
+                        />
+                        <Text style={[{textAlign: 'center', fontSize: 17, fontWeight: "800", paddingVertical: 10}]}>
+                            {perceivedLoad}
+                        </Text>
                         </View>
+
+                        <View style={[{alignItems: 'center', paddingHorizontal: 10, paddingVertical: 10}]}>
+                    <Text style={[{textAlign: 'center', fontSize: 17, fontWeight: "800", paddingBottom: 10}]}>
+                            Duration
+                        </Text>
+                        <VerticalSlider
+                        value={duration}
+                        disabled={false}
+                        min={1}
+                        max={10}
+                        onChange={setDuration}
+                        onComplete={setDuration}
+                        width={50}
+                        height={300}
+                        step={0.5}
+                        borderRadius={5}
+                        minimumTrackTintColor={"black"}
+                        maximumTrackTintColor={"white"}
+                        />
+                        <Text style={[{textAlign: 'center', fontSize: 17, fontWeight: "800", paddingVertical: 10}]}>
+                            {duration} hrs
+                        </Text>
+                        </View>
+                        </View>
+                            </View>
+    {/*</View>*/}
+                        <View style={{flex: 1, flexDirection: "column",
+                                            paddingHorizontal: 20, paddingTop: 100}}>
                         <View style={{flex: 1, flexDirection: "column",
                                             paddingHorizontal: 10}}>
                                     <Text style = {[styles.titleText]}>
@@ -611,7 +657,7 @@ function report({navigation, route}) {
                         
         
          
-            <ScrollView style={[{paddingHorizontal: 12, flex:1}]}>
+            {/* <ScrollView style={[{paddingHorizontal: 12, flex:1}]}>
         <View style={[{flex:1, flexDirection:'collumn'}]}>
         <Text style = {[styles.titleText]}>
                                         Injuries
@@ -662,6 +708,7 @@ function report({navigation, route}) {
           //maximumTrackTintColor="limegreen"
           onValueChange={onInjurySlide}
           tapToSeek
+          vertical="true"
           //thumbTintColor = 'dodgerblue'
         />
         <View style={[{flex:1, marginVertical:10, paddingLeft:5, paddingTop: 16, marginHorizontal: 20}]}>
@@ -693,7 +740,7 @@ function report({navigation, route}) {
                     </Text>
         </TouchableOpacity>
         <TouchableOpacity
-                    style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7, marginTop:10}]}
+                    style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7}]}
                         //onPress={() => {
                         //    setModalVisible(true)     
                         //    }}
@@ -705,15 +752,31 @@ function report({navigation, route}) {
                     <Text style = {[styles.buttonText]}>
                         Submit <Ionicons name="enter-outline" size={20} color="black" />
                     </Text>
-                </TouchableOpacity>        
-      </ScrollView>
+                </TouchableOpacity>
+      </ScrollView> */}
+
+<TouchableOpacity
+                    style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7}]}
+                        //onPress={() => {
+                        //    setModalVisible(true)     
+                        //    }}
+                    //onPress = {submit}
+                    onPress = {
+                        () => updateData()
+                    }
+                >
+                    <Text style = {[styles.buttonText]}>
+                        Submit <Ionicons name="enter-outline" size={20} color="black" />
+                    </Text>
+                </TouchableOpacity>
     
                          </View>
                         </View>
-                    </View>
+                        </View>
+                        </View>
+                    </ScrollView>
+                
                 </TouchableWithoutFeedback>
-       
-            </ScrollView>
         </SafeAreaView>
     );
 }
