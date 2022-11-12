@@ -10,9 +10,6 @@ import { auth, db } from '../Firebase';
 
 import { thisUser } from '../login';
 import { athletes } from './CoachHomeNav';
-import { getStatusAsync } from 'expo-background-fetch';
-import { async } from '@firebase/util';
-import { color } from 'react-native-elements/dist/helpers';
 import {
     LineChart,
     BarChart,
@@ -29,6 +26,7 @@ const wait = (timeout) => {
 
 var graphLabels = []
 var graphData = []
+var comments = []
 
 function CoachShare({navigation}) {
     //console.log(thisUser)
@@ -217,6 +215,7 @@ function CoachShare({navigation}) {
     const getDat = async(email) => {
         const docRef = doc(db, "users", email, 'data', 'acwr');
         const docSnap = await getDoc(docRef);
+        comments = docSnap.data().comments
         graphData = docSnap.data().values
         setIsLoading(false)
         return docSnap.data().values
@@ -290,8 +289,8 @@ function CoachShare({navigation}) {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={styles.modalText}>{clickedPerson}</Text>
-                        <Text style={styles.modalText}>Projected</Text>
-                        <Text style={styles.modalText}>Target</Text>
+                        {/*<Text style={styles.modalText}>Projected</Text>
+                        <Text style={styles.modalText}>Target</Text>*/}
                         {!isLoading ? (
                         <View>
                             <LineChart
@@ -329,7 +328,6 @@ function CoachShare({navigation}) {
                             stroke: "#001f59"
                         }
                         }}
-                        bezier
                         style={{
                             marginVertical: 10,
                             borderRadius: 10
@@ -339,13 +337,19 @@ function CoachShare({navigation}) {
                         ) : (
                         <ActivityIndicator size="large" animating={true} color = 'gray' style={{paddingBottom:10}}/>
                         )}
-                        
+                        <View>
+                            <Text style={[{fontWeight:"bold", alignSelf:'center'}]}>Comments</Text>
+                            { comments.map((item, key)=>(
+                            <Text key={key}> {graphLabels[key] + ': ' + item } </Text>)
+                            )}
+                        </View>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => {
                                 setModalVisible(!modalVisible)
                                 graphData = []
                                 graphLabels = []
+                                comments = []
                                 setIsLoading(true)
                             }
                             }
@@ -413,7 +417,8 @@ const styles = StyleSheet.create({
     },
     buttonClose: {
         backgroundColor: "red",
-        padding:5
+        padding:5,
+        marginTop: 20
     },
     textStyle: {
         color: "white",

@@ -54,7 +54,7 @@ function CoachHome({navigation, route}) {
     graphData = graphData
     graphLabels = graphLabels
     global.data = global.data
-  }, [isFocused]);
+  }, [isFocused, graphData, graphLabels]);
 
     const getLab = async(email) => {
         const docRef = doc(db, "users", email, 'data', 'acwr');

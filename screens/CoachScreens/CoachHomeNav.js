@@ -95,7 +95,7 @@ function CoachHomeNav() {
       activeColor="black"
       barStyle={{ backgroundColor: 'white' }}
     >
-      <Stack.Screen 
+      {/*<Stack.Screen 
         name="Home" 
         component={CoachHome} 
         options={{
@@ -107,7 +107,7 @@ function CoachHomeNav() {
           ),
         }}
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
-      />
+      />*/}
       <Stack.Screen 
         name="Calendar" 
         component={CoachCalendar} 
