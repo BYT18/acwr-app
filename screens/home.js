@@ -252,7 +252,6 @@ function Home({navigation, route}) {
               stroke: "#001f59"
           }
           }}
-          bezier
           style={{
             marginVertical: 10,
             borderRadius: 10
