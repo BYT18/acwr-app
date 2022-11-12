@@ -266,7 +266,7 @@ function Home({navigation, route}) {
         if (0.9 <= s && s <= 1.3) {
             return 'limegreen'
           } else if (1.3 < s && s <= 1.5) {
-              return 'yellow'
+              return 'gold'
           } else {
             return 'red'
           }
