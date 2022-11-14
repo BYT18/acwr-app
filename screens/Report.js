@@ -94,6 +94,7 @@ function report({navigation, route}) {
     var commVar = ''
     var descVar = ''
     var slideVar = 5
+    var moodSlideVar = 1
     var wheelVar = 0
 
     var getDaysArray = function(end, start) {
@@ -169,6 +170,7 @@ function report({navigation, route}) {
     const [comm, onChangeComm] = React.useState(commVar);
     const [goal, onChangeGoal] = React.useState(goalVar);
     const [slide, onSlide] = React.useState(slideVar);
+    const [moodSlide, onMoodSlide] = React.useState(moodSlideVar);
     const [time, onChangeTime] = React.useState(wheelVar);
     const [displayACWR, onChangeACWR] = React.useState(Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100);
     
@@ -341,7 +343,8 @@ function report({navigation, route}) {
             updateDoc(doc(db, "users", thisUser.email, 'data', 'acwr'), {
                 values: arrayUnion(acwrNew),
                 dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()),
-                comments: arrayUnion(comm)
+                comments: arrayUnion(comm),
+                mood: arrayUnion(getMood(slide))
             })
         }
         else{
@@ -364,7 +367,9 @@ function report({navigation, route}) {
                 })
                 updateDoc(doc(db, "users", thisUser.email.toLowerCase(), 'data', 'acwr'), {
                     values: arrayUnion(acwrNew),
-                    dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate())
+                    dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()),
+                    comments: arrayUnion(comm),
+                    mood: arrayUnion(getMood(slide))
                 })
             } else{
                 //global.data.date[global.data.date.indexOf(showDate())] = nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()
@@ -390,7 +395,9 @@ function report({navigation, route}) {
                 })
                 updateDoc(doc(db, "users", email, 'data', 'acwr'), {
                     values: arrayUnion(acwrNew),
-                    dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate())
+                    dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()),
+                    comments: arrayUnion(comm),
+                    mood: arrayUnion(getMood(slide))
                 })
             }
         }
@@ -408,6 +415,16 @@ function report({navigation, route}) {
         }
         getData()
         navigation.navigate('Home')
+    }
+
+    const getMood = (s) =>{
+        if (s==0) {
+            return 'good'
+          } else if (s == 1) {
+              return 'neutral'
+          } else {
+            return 'bad'
+          }
     }
 
     
@@ -514,6 +531,21 @@ function report({navigation, route}) {
                                     minimumTrackTintColor="red"
                                     maximumTrackTintColor="limegreen"
                                     onValueChange={onSlide}
+                                    tapToSeek
+                                    //thumbTintColor = 'dodgerblue'
+                                />
+                                <Text style = {[styles.text]}>
+                                    {"Mood | Fatigue | Stress: " + getMood(moodSlide)} 
+                                </Text>
+                                <Slider
+                                    style={{width: 280}}
+                                    minimumValue={0}
+                                    maximumValue={2}
+                                    step = {1}
+                                    value = {moodSlideVar}
+                                    minimumTrackTintColor="dodgerblue"
+                                    maximumTrackTintColor="red"
+                                    onValueChange={onMoodSlide}
                                     tapToSeek
                                     //thumbTintColor = 'dodgerblue'
                                 />

@@ -27,6 +27,7 @@ const wait = (timeout) => {
 var graphLabels = []
 var graphData = []
 var comments = []
+var mood = []
 
 function CoachShare({navigation}) {
     //console.log(thisUser)
@@ -217,6 +218,7 @@ function CoachShare({navigation}) {
         const docSnap = await getDoc(docRef);
         comments = docSnap.data().comments
         graphData = docSnap.data().values
+        mood = docSnap.data().mood
         setIsLoading(false)
         return docSnap.data().values
     }
@@ -337,11 +339,22 @@ function CoachShare({navigation}) {
                         ) : (
                         <ActivityIndicator size="large" animating={true} color = 'gray' style={{paddingBottom:10}}/>
                         )}
-                        <View>
+                        <View style={[{flexDirection:"row", alignContent:'space-between'}]}>
+                            <View style={[{paddingRight:20}]}>
                             <Text style={[{fontWeight:"bold", alignSelf:'center'}]}>Comments</Text>
                             { comments.map((item, key)=>(
                             <Text key={key}> {graphLabels[key] + ': ' + item } </Text>)
                             )}
+
+                            </View>
+                            <View style={[{}]}>
+                            <Text style={[{fontWeight:"bold", alignSelf:'center'}]}>Mood</Text>
+                            { mood.map((item, key)=>(
+                            <Text key={key}> {graphLabels[key] + ': ' + item } </Text>)
+                            )}
+
+                            </View>
+                            
                         </View>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
