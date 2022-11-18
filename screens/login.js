@@ -227,7 +227,7 @@ const login = ({navigation}) =>{
           />
       <SafeAreaView>
       
-        <Text style={styles.welcomeText}>PR Login</Text>
+        <Text style={styles.welcomeText}>Login</Text>
         <View>
       <Input
       inputStyle = {{color:'white'}}

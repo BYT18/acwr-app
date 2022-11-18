@@ -180,7 +180,7 @@ export default class Calendar extends Component {
           selectedDayColor="lightgray"
           selectedDayTextColor="black"
           customDatesStyles={customDatesStyles}
-          //scrollable={true}
+          // scrollable={true}
         />
         <View style={styles.dateInfoBox}>
             <TouchableOpacity onPress = {() => this.setModalVisible(!modalVisible)}>
@@ -253,8 +253,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    flexDirection:'column'
-    //marginTop: 10,
+    flexDirection:'column',
+    paddingTop: 10,
   },
   modalView: {
     margin: 5,
