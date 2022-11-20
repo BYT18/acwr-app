@@ -64,6 +64,7 @@ function report({navigation, route}) {
       const [stressSlide, onStressSlide] = React.useState(0.5);
       const [injuries, setInjuries] = useState([]);
       const [stresses, setStresses] = useState([]);
+      const [refresh, setRefresh] = useState();
 
 
       const renderLabel = (label, foc) => {
@@ -95,6 +96,7 @@ function report({navigation, route}) {
     var descVar = ''
     var slideVar = 5
     var moodSlideVar = 1
+    var durationSlideVar = 2
     var wheelVar = 0
 
     var getDaysArray = function(end, start) {
@@ -170,6 +172,7 @@ function report({navigation, route}) {
     const [comm, onChangeComm] = React.useState(commVar);
     const [goal, onChangeGoal] = React.useState(goalVar);
     const [slide, onSlide] = React.useState(slideVar);
+    const [durationSlide, ondurationSlide] = React.useState(durationSlideVar);
     const [moodSlide, onMoodSlide] = React.useState(moodSlideVar);
     const [time, onChangeTime] = React.useState(wheelVar);
     const [displayACWR, onChangeACWR] = React.useState(Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100);
@@ -199,6 +202,11 @@ function report({navigation, route}) {
           })
         
       }, [injuries, stresses]);
+
+      useEffect(() => {
+        console.log(injuries)
+    }, [injuries]);
+
 
     const submit = () =>{
         //setDoc(doc(db, "cities", "new-city-id"), data);
@@ -259,8 +267,10 @@ function report({navigation, route}) {
         //console.log(data.date.length)
         var acutePast = global.data.acute[global.data.acute.length - 1]
         var chronicPast = global.data.chronic[global.data.chronic.length - 1]
-        //var current = time * slide
-        var current = ((selected[1] - selected[0])*60) * slide
+        // var current = time * slide
+        //when on multislider
+        //var current = ((selected[1] - selected[0])*60) * slide
+        var current = (durationSlide)*60 * slide
         var acwrNew = 0
         var acuteNew = 0
         var chronicNew = 0
@@ -309,8 +319,9 @@ function report({navigation, route}) {
             global.data.fullDate.push(...getDaysArray(nowDate, pastDate))
             global.data.date.push(...getDaysArrayShort(nowDate, pastDate))
 
-            //var current = time * slide
-            var current = ((selected[1] - selected[0])*60) * slide
+            // var current = time * slide
+            var current = (durationSlide*60) * slide
+            //var current = ((selected[1] - selected[0])*60) * slide
             var acwrNew = 0
             var acuteNew = 0
             var chronicNew = 0
@@ -329,7 +340,8 @@ function report({navigation, route}) {
             global.data.fullDate.push(nowDate)
             global.data.acute.push(acuteNew)
             //global.data.time.push(time)
-            global.data.time.push((selected[1] - selected[0])*60)
+            // global.data.time.push((selected[1] - selected[0])*60)
+            global.data.time.push((durationSlide)*60)
             global.data.chronic.push(chronicNew)
             global.data.percieved.push(slide)
             global.data.acwr.push(acwrNew)
@@ -354,7 +366,8 @@ function report({navigation, route}) {
                 global.data.fullDate.push(nowDate)
                 global.data.acute.push(acuteNew)
                 //global.data.time.push(time)
-                global.data.time.push((selected[1] - selected[0])*60)
+                // global.data.time.push((selected[1] - selected[0])*60)
+                global.data.time.push(durationSlide*60)
                 global.data.chronic.push(chronicNew)
                 global.data.percieved.push(slide)
                 global.data.acwr.push(acwrNew)
@@ -376,7 +389,8 @@ function report({navigation, route}) {
                 //global.data.fullDate[global.data.date.indexOf(showDate())] = nowDate
                 global.data.acute[global.data.date.indexOf(showDate())] = acuteNew 
                 //global.data.time[global.data.date.indexOf(showDate())] = time
-                global.data.time[global.data.date.indexOf(showDate())] =  (selected[1] - selected[0])*60
+                // global.data.time[global.data.date.indexOf(showDate())] =  (selected[1] - selected[0])*60
+                global.data.time[global.data.date.indexOf(showDate())] =  (selected)*60
                 global.data.chronic[global.data.date.indexOf(showDate())] = chronicNew 
                 global.data.percieved[global.data.date.indexOf(showDate())] = slide
                 global.data.acwr[global.data.date.indexOf(showDate())] = acwrNew
@@ -550,9 +564,21 @@ function report({navigation, route}) {
                                     //thumbTintColor = 'dodgerblue'
                                 />
                                <Text style = {[styles.text,{paddingBottom:15}]}>
-                                    {"Duration:"} 
+                                    {"Duration:"} {durationSlide} hrs
                                 </Text>
-                               <MultiSlider
+                                <Slider
+                                    style={{width: 280}}
+                                    minimumValue={1}
+                                    maximumValue={6}
+                                    step = {0.25}
+                                    value = {durationSlideVar}
+                                    minimumTrackTintColor="black"
+                                    maximumTrackTintColor="black"
+                                    onValueChange={ondurationSlide}
+                                    tapToSeek
+                                    //thumbTintColor = 'dodgerblue'
+                                />
+                               {/* <MultiSlider
                                     min={min}
                                     max={max}
                                     step={0.25}
@@ -573,7 +599,7 @@ function report({navigation, route}) {
                                     unselectedStyle={{
                                         backgroundColor: "#EEF3F7",
                                     }}
-                                />
+                                /> */}
                                 {/*<CircleSlider
                                     dialRadius={60}
                                     btnRadius={25}
@@ -592,7 +618,7 @@ function report({navigation, route}) {
                         <View style={{flex: 1, flexDirection: "column",
                                             paddingHorizontal: 10}}>
                                     <Text style = {[styles.titleText]}>
-                                        Description 
+                                        What I did 
                                     </Text>
                                     <TextInput
                                         style={styles.input}
@@ -605,7 +631,7 @@ function report({navigation, route}) {
                                         //placeholderTextColor='red'
                                     />       
                                     <Text style = {[styles.titleText]}>
-                                        Comments
+                                        How did I feel
                                     </Text>
                                     <TextInput
                                         style={styles.input}
@@ -614,7 +640,7 @@ function report({navigation, route}) {
                                         clearButtonMode={true}
                                     />       
                                     <Text style = {[styles.titleText]}>
-                                        Goals
+                                        What can I improve
                                     </Text>
                                     <TextInput
                                         style={styles.input}
@@ -704,7 +730,7 @@ function report({navigation, route}) {
         <FlatList
           data={injuries}
           width='100%'
-          //extraData={this.state.arrayHolder}
+          extraData={refresh}
           keyExtractor={(index) => index.toString()}
           // ItemSeparatorComponent={FlatListItemSeparator}
           renderItem={({ item }) => <InjuryReportComponent part={item.part} sev={item.sev} />}
@@ -717,7 +743,8 @@ function report({navigation, route}) {
                     //onPress = {submit}
                     onPress = {
                         () => {injuries.pop()
-                        setInjuries(injuries)}
+                        setInjuries(injuries)
+                    setRefresh(!refresh)}
                     }
                 >
                     <Text style = {[styles.buttonText]}>

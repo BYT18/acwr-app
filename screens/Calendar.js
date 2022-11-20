@@ -182,10 +182,13 @@ export default class Calendar extends Component {
           customDatesStyles={customDatesStyles}
           // scrollable={true}
         />
-        <View style={styles.dateInfoBox}>
-            <TouchableOpacity onPress = {() => this.setModalVisible(!modalVisible)}>
+        <ScrollView style={styles.dateInfoBox}>
+          <View styles={[{ flexDirection: 'row'}]}>
+            {/* <TouchableOpacity onPress = {() => this.setModalVisible(!modalVisible)}> */}
               <Text style={styles.datetext}>{ this.displayDate(startDate) }</Text>
-            </TouchableOpacity>
+              <EditButton showButton={this.isInThePast(startDate)} />
+            {/* </TouchableOpacity> */}
+            </View>
           <View style={styles.infobox}>
             <Text style={styles.boxsubheading}>Time:</Text>
             <Text style={styles.boxText}>{ global.data.time[global.data.date.indexOf(startDate)] }</Text>
@@ -198,9 +201,34 @@ export default class Calendar extends Component {
             <Text style={styles.boxsubheading}>ACWR:</Text>
             <Text style={styles.boxText}>{ Math.round(global.data.acwr[global.data.date.indexOf(startDate)]* 100) / 100 }</Text>
           </View>
-          <EditButton showButton={this.isInThePast(startDate)} />
-        </View>
-        <Modal
+
+            <View style={styles.dateInfoBox}>
+              <Text style={styles.boxsubheading}>Description</Text>
+                  <Text style={{paddingBottom:10, fontSize: 15, fontWeight:'300'}}>
+                    {global.data.desc[global.data.date.indexOf(startDate)]}
+                    </Text>
+                    <Text style={styles.boxsubheading}>Comments</Text>
+                  <Text style={{paddingBottom:10, fontSize: 15, fontWeight:'300'}}>
+                    {global.data.com[global.data.date.indexOf(startDate)]}
+                    </Text>
+                    <Text style={styles.boxsubheading}>Goals</Text>
+                  <Text style={{paddingBottom:10, fontSize: 15, fontWeight:'300'}}>
+                    {global.data.goals[global.data.date.indexOf(startDate)]}
+                    </Text>
+                  <View style={{height:50}}>
+                  <Text style={styles.boxsubheading}>Injury Watch</Text>
+                  <View style={styles.flatliststyle}>
+                    <FlatList
+                          data={DATA}
+                          renderItem={renderItem}
+                          keyExtractor={item => item.part}
+                      />
+                      </View>
+                </View>
+              </View>
+          
+        </ScrollView>
+        {/* <Modal
           animationType="slide"
           transparent={true}
           visible={modalVisible}
@@ -243,7 +271,7 @@ export default class Calendar extends Component {
                 </View>
               </View>
           </View>
-        </Modal>
+        </Modal> */}
       </View>
     );
   }
@@ -322,7 +350,7 @@ const styles = StyleSheet.create({
     flex:1,
   },
   editButton:{
-    flex:1,
+    // flex:1,
     //backgroundColor: 'white',
     //flexDirection:'column',
     justifyContent: 'flex-end',

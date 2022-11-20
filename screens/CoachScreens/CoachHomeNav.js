@@ -109,24 +109,24 @@ function CoachHomeNav() {
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
       />*/}
       <Stack.Screen 
-        name="Calendar" 
-        component={CoachCalendar} 
+        name="Home" 
+        component={CoachHome} 
         options={{
           // unmountOnBlur: true,
-          tabBarLabel: 'Calendar',
+          tabBarLabel: 'Home',
           tabBarColor:'white',
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name='calendar-today' size={24} color={color}></MaterialIcons>
+            <MaterialIcons name='home' size={24} color={color}></MaterialIcons>
           ),
         }}
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
       />
       <Stack.Screen 
-        name="Share" 
+        name="Athletes" 
         component={CoachShare} 
         options={{
           // unmountOnBlur: true,
-          tabBarLabel: 'Share',
+          tabBarLabel: 'Athletes',
           tabBarColor:'white',
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='people' size={24} color={color}></MaterialIcons>
