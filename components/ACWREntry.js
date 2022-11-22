@@ -8,9 +8,7 @@ import Report from '../screens/Report';
 const ACWREntry = ({navigation, route}) => {
   return (
     <>
-    <TouchableOpacity style={styles.button} onPress={() => {
-        navigation.navigate('Report')
-    }}>
+    <TouchableOpacity style={styles.button}>
       <Image source={require('./assets/icon.png')} style={{width:60, height: 60, borderRadius: 100}}/>
     </TouchableOpacity>
     </>

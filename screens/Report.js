@@ -16,6 +16,7 @@ import { thisUser } from './homeNav';
 import BodyPage from './BodyPage';
 import { Dropdown } from 'react-native-element-dropdown';
 import InjuryReportComponent from '../components/InjuryReportComponent';
+import ACWREntry from '../components/ACWREntry';
 
 
 const textTransformerTimes = (value) => {
@@ -518,7 +519,9 @@ function report({navigation, route}) {
 
     return (
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
-            {/*<DatePicker date={date} onDateChange={setDate} />*/}
+            {/*<DatePicker date={date} onDateChange={setDate} />*/} 
+            <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Report</Text>
+
             <ScrollView
     
            
@@ -773,6 +776,7 @@ function report({navigation, route}) {
                 </TouchableWithoutFeedback>
        
             </ScrollView>
+            <ACWREntry />
         </SafeAreaView>
     );
 }

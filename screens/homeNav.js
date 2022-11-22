@@ -135,9 +135,10 @@ function homeNav() {
           fontFamily: 'Cochin',
         },
       }}*/
-      
+      inactiveColor='black'
       activeColor="black"
-      barStyle={{ backgroundColor: 'white' }}
+      
+      barStyle={{ backgroundColor: 'black' }}
     >
       
       <Stack.Screen 
@@ -145,7 +146,6 @@ function homeNav() {
         component={Home} 
         options={{
           // unmountOnBlur: true,
-          
           tabBarColor:'white',
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='home' size={24} color={color}></MaterialIcons>
@@ -153,6 +153,21 @@ function homeNav() {
         }}
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
       />
+
+  <Stack.Screen 
+        name="Report" 
+        component={Report} 
+        options={{
+          // unmountOnBlur: true,
+          tabBarLabel: 'Report',
+          tabBarColor:'white',
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name='book' size={24} color={color}></MaterialIcons>
+          ),
+        }}
+        listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
+      />
+
       <Stack.Screen 
         name="Calendar" 
         component={Calendar} 
@@ -166,26 +181,13 @@ function homeNav() {
         }}
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
       />
-      {/* <Stack.Screen 
-        name="Share" 
-        component={share} 
-        options={{
-          // unmountOnBlur: true,
-          tabBarLabel: 'Share',
-          tabBarColor:'white',
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name='people' size={24} color={color}></MaterialIcons>
-          ),
-        }}
-        listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
-      /> */}
      
       <Stack.Screen 
         name="Settings" 
         component={settings} 
         options={{
-          tabBarLabel: 'Profile',
-          tabBarColor:'orange',
+          tabBarLabel: 'Settings',
+          tabBarColor:'white',
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='person' size={24} color={color}></MaterialIcons>
           ),
