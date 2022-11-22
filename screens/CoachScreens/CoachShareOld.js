@@ -67,7 +67,7 @@ function CoachShare({navigation}) {
         if (0.9 <= s && s <= 1.3) {
           //return <Image style={styles.av} source={{ uri:'https://placeimg.com/140/140/any'}}></Image>
           //return <Image style={styles.av} source={{uri: people[1].avatar}}></Image>
-          return <View
+          return <TouchableOpacity
                     style={[styles.roundButton1,{borderColor:'limegreen'}]}
                     //onPress={() => {
                     //    setModalVisible(true)     
@@ -77,8 +77,8 @@ function CoachShare({navigation}) {
                     }}
                 >
                 {/*<MaterialIcons name='access-time' size={50} color='orange'></MaterialIcons>*/}
-                    <Text style={styles.acwrtext}>{s}</Text>
-                </View>
+                    <Text style={{fontSize:12}}>{s}</Text>
+                </TouchableOpacity>
         } else if (1.3 < s && s <= 1.5) {
             return <TouchableOpacity
                     style={[styles.roundButton1,{borderColor:'yellow'}]}
@@ -87,16 +87,19 @@ function CoachShare({navigation}) {
                     }}
                 >
                 {/*<MaterialIcons name='access-time' size={50} color='orange'></MaterialIcons>*/}
-                    <Text style={styles.acwrtext}>{s}</Text>
+                    <Text style={{fontSize:12}}>{s}</Text>
                 </TouchableOpacity>
         } else {
           //return <Image style={[styles.av,{borderWidth:0}]} source={{uri: photo}}></Image>
-          return <View
+          return <TouchableOpacity
                     style={[styles.roundButton1,{borderColor:'red'}]}
+                    onPress={() => {
+                        getData() 
+                    }}
                 >
                 {/*<MaterialIcons name='access-time' size={50} color='orange'></MaterialIcons>*/}
-                    <Text style={styles.acwrtext}>{s}</Text>
-                </View>
+                    <Text style={{fontSize:12}}>{s}</Text>
+                </TouchableOpacity>
         }
     }
 
@@ -225,13 +228,13 @@ function CoachShare({navigation}) {
         <SafeAreaView style={styles.container}>
             <View style = {{flexDirection: 'row'}}>
                 <View style = {{flex:7}}>
-                    {/* <Searchbar
+                    <Searchbar
                         //placeholder= {'search '+ thisUser.team}
                         placeholder= {'SEARCH'}
                         onChangeText={onChangeSearch}
                         value={searchQuery}
                         elevation={0}
-                    /> */}
+                    />
                 </View>
                 {/*<View style = {{flex:2, justifyContent:'center'}}>
                     <Button
@@ -248,38 +251,127 @@ function CoachShare({navigation}) {
                     />
                 }
             >
-                <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Team List</Text>
-                <View style={[{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 15, fontWeight: "800", fontSize: 18}]}>
-                <Text style={[{fontWeight: "600", fontSize: 21}]}>Name</Text><Text style={[{fontWeight: "600", fontSize: 21}]}>ACWR</Text>
-                </View>
                 {athletes.map(item => (
-                    <View key={item.key} style={[{ justifyContent: "space-evenly" }, { flexDirection: "row", marginTop: 20, }]}>
-                        <View style={styles.item}>
+                    <View key={item.key} style={[{ justifyContent: "space-evenly" }, { flexDirection: "row" }]}>
+                        <TouchableOpacity style={styles.item} onPress={()=>
+                             //HomeScreen(),
+                             //navigation.navigate('name',{name:item.name, chatID: item.chatID})
+                             {setModalVisible(true), setClickedPerson(item.name), setClickedEmail(item.email), getLab(item.email), getDat(item.email)}
+                             //HomeScreen()
+                             //navigation.navigate('C')
+                             }>
                             <View key={item.key} style={[ { flexDirection: "row" }]}>
-                            
-                                <Text style={[styles.nametext,{ flex:3}]}>
-                                    {item.name.toUpperCase()}
+                                {/*{alert(item.newM, item.avatar)}*/}
+                                {/*<Image style={[styles.av,{borderWidth:0}]} source={{uri: 'https://placeimg.com/140/140/any'}}></Image>*/}
+                               
+                                <Text style={[styles.text,{ flex:3}]}>
+                                    {item.name}
                                 </Text>
-                                </View>
-                                </View>
-
-                                <View style={styles.acwrbox}>
-
-                                <View  style={[styles.statusBox,{backgroundColor: statCol(item.status)}]}>
+                                <TouchableOpacity  style={[styles.statusBox,{backgroundColor: statCol(item.status)}]}>
                                     <Text style={[styles.statusText]}>
                                         {item.status}
                                     </Text>
-                                </View>
-                                <View>
+                                </TouchableOpacity>
                                 {alert(Math.round(item.acwr * 100) / 100)}
-                                </View>
-                                </View>
-
-                            
-                        
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 ))}
             </ScrollView>
+            <Modal
+                //style={[{width:100}]}
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>{clickedPerson}</Text>
+                        {/*<Text style={styles.modalText}>Projected</Text>
+                        <Text style={styles.modalText}>Target</Text>*/}
+                        {!isLoading ? (
+                        <View>
+                            <LineChart
+                        data={{
+                        //labels: global.data.date.slice(-7),
+                        //labels: chartLabels(),
+                        labels: graphLabels,
+                        //labels: item.labels,
+                        datasets: [
+                            {
+                            data: graphData
+                            //data: item.data
+                            //data: getDat(clickedEmail)
+                            }
+                        ]
+                        }}
+                        width={Dimensions.get("window").width - 40} // from react-native
+                        height={250}
+                        //yAxisLabel="$"
+                        //yAxisSuffix="k"
+                        yAxisInterval={1} // optional, defaults to 1
+                        chartConfig={{
+                        backgroundColor: "#fff",
+                        backgroundGradientFrom: "#fff",
+                        backgroundGradientTo: "#fff",
+                        decimalPlaces: 2, // optional, defaults to 2dp
+                        color: (opacity = 1) => `rgba(0, 69, 196, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(0, 39, 89, ${opacity})`,
+                        style: {
+                            borderRadius: 1
+                        },
+                        propsForDots: {
+                            r: "3",
+                            strokeWidth: "6",
+                            stroke: "#001f59"
+                        }
+                        }}
+                        style={{
+                            marginVertical: 10,
+                            borderRadius: 10
+                        }}
+                        />
+                        </View>
+                        ) : (
+                        <ActivityIndicator size="large" animating={true} color = 'gray' style={{paddingBottom:10}}/>
+                        )}
+                        <View style={[{flexDirection:"row", alignContent:'space-between'}]}>
+                            <View style={[{paddingRight:20}]}>
+                            <Text style={[{fontWeight:"bold", alignSelf:'center'}]}>Comments</Text>
+                            { comments.map((item, key)=>(
+                            <Text key={key}> {graphLabels[key] + ': ' + item } </Text>)
+                            )}
+
+                            </View>
+                            <View style={[{}]}>
+                            <Text style={[{fontWeight:"bold", alignSelf:'center'}]}>Mood</Text>
+                            { mood.map((item, key)=>(
+                            <Text key={key}> {graphLabels[key] + ': ' + item } </Text>)
+                            )}
+
+                            </View>
+                            
+                        </View>
+                        <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => {
+                                setModalVisible(!modalVisible)
+                                graphData = []
+                                graphLabels = []
+                                comments = []
+                                setIsLoading(true)
+                            }
+                            }
+                        >
+                            <Text style={styles.textStyle}>Close</Text>
+                        </Pressable>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 }
@@ -325,12 +417,12 @@ const styles = StyleSheet.create({
         //paddingHorizontal: 20,
         backgroundColor: '#fff',
     },
-    nametext:{
-        paddingTop:13,
+    text:{
+        paddingTop:10,
         paddingLeft:25,
-        justifyContent:'center',
-        fontSize: 21,
-        fontWeight: '600'
+        fontSize: 30,
+        fontFamily:'Helvetica',
+        justifyContent:'center'
         //color:'white'
     },
     buttonOpen: {
@@ -352,12 +444,13 @@ const styles = StyleSheet.create({
     },
     item: {
         flex: 1,
-        backgroundColor: '#ececec',
-        fontSize: 50,
-        borderTopLeftRadius: 15,
-        borderBottomLeftRadius: 15,
-        marginLeft: 15,
-        paddingTop: 20,
+        marginHorizontal: 10,
+        //marginTop: 5,
+        padding: 15,
+        //backgroundColor: 'slateblue',
+        //fontSize: 50,
+        borderBottomColor:"grey",
+        borderBottomWidth:0.5,
     },
     profileIcon: {
         marginRight: 25,
@@ -393,24 +486,11 @@ const styles = StyleSheet.create({
         flex:1,
         marginRight:15,
         padding:5,
+        //borderWidth:2,
         borderRadius:15,
-    },
-    acwrbox:{
-        backgroundColor: '#f6f6f6',
-        alignItems: 'center',
-        justifyContent: "center",
-        alignContent: "center",
-        textAlign: 'center',
-        paddingHorizontal: 15,
-        marginRight: 15,
-        paddingBottom: 15,
-        borderTopRightRadius: 15,
-        borderBottomRightRadius: 15,
-    },
-    acwrtext: {
-        fontSize:18, 
-        fontWeight: '800',
-    },
+        //borderColor:'red'
+        //backgroundColor:'red'
+    }
     
 });
 

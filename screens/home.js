@@ -5,6 +5,7 @@ import { StyleSheet, Button, Text, View, SafeAreaView, Platform, TouchableOpacit
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc} from "firebase/firestore"; 
 import { auth, db } from './Firebase';
 import { useIsFocused } from '@react-navigation/native'
+import ACWREntry from '../components/ACWREntry';
 import {
     LineChart,
     BarChart,
@@ -119,6 +120,13 @@ function Home({navigation, route}) {
   };
 
   getGoals()
+
+  // const getAthleteName = () => {
+  //   const docSnap = getDoc(doc(db, "users", thisUser.email))
+
+  //       thisUser.name = docSnap.data().name
+  // }
+
   
   const isFocused = useIsFocused()
   useEffect(() => {
@@ -274,15 +282,17 @@ function Home({navigation, route}) {
   
     return (
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
-          <ScrollView>
   
             {/* <View>
                     <Text style={styles.welcometext}>Welcome, {displayName} </Text>
             </View> */}
+                        <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>{thisUser.name}'s Lab</Text>
 
+          <ScrollView>
             <View style={{flex: 2, justifyContent:'space-between'}}>
-
+              
                 <View style={{ marginVertical:12}}>
+
                 <View>
                     <Text style={styles.centersubheading}>Current ACWR</Text>
                 </View>
@@ -333,6 +343,7 @@ function Home({navigation, route}) {
                 />    
                 </View>
             </View>
+            
             </View>
             <View style={{flex:1,}}>
                 <View style={styles.goalstextbox}>
@@ -365,9 +376,9 @@ function Home({navigation, route}) {
                 onPress={() => openLink()}
                 //onPress={() => removePushTokenSubscription(isRegistered)}
                 /> */}
-                
             </View>
             </ScrollView>
+            <ACWREntry />
         </SafeAreaView>
     );
 }
@@ -488,7 +499,7 @@ const styles = StyleSheet.create({
         //marginRight: 10,
         fontWeight: '600',
         //paddingVertical: 2,
-        fontSize: 30,
+        fontSize: 24,
         //borderWidth: 5,
         //borderColor: 'red'
     },

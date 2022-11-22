@@ -86,6 +86,7 @@ function homeNav() {
     //athletes = docSnap.data().athletes
     //console.log('login',athletes)
   }
+  
 
   const getData = async () => {
     
@@ -179,17 +180,17 @@ function homeNav() {
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
       /> */}
      
-      {/*<Stack.Screen 
+      <Stack.Screen 
         name="Settings" 
         component={settings} 
         options={{
-          tabBarLabel: 'SETTINGS',
+          tabBarLabel: 'Profile',
           tabBarColor:'orange',
           tabBarIcon: ({ color }) => (
-            <MaterialIcons name='apps' size={24} color={color}></MaterialIcons>
+            <MaterialIcons name='person' size={24} color={color}></MaterialIcons>
           ),
         }}
-      />*/}
+      />
     </Stack.Navigator>
 
 );

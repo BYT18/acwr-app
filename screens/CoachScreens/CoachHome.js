@@ -24,7 +24,8 @@ import { athletes, athList } from './CoachHomeNav';
 var goals = []
 var graphLabels = []
 var graphData = []
-var comments = []
+var datecomments = []
+var datedata = []
 const SLIDER_WIDTH = Dimensions.get('window').width + 80
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.75)
 
@@ -35,6 +36,13 @@ function CoachHome({navigation, route}) {
   const [isFocus, setIsFocus] = useState(false);
   const [clickedPerson, setClickedPerson] = React.useState('');
   const [isLoading, setIsLoading] = useState(true);
+  
+
+  const [dotSelected, setDotSelected] = useState();
+  const [date, setDate] = useState();
+  const [acwr, setACWR] = useState();
+  const [commentsDate, setCommentsDate] = useState([]);
+  const [athleteName, setAthleteName] = useState();
   
   const renderLabel = (label, foc) => {
     if (value || foc) {
@@ -50,7 +58,7 @@ function CoachHome({navigation, route}) {
   const isFocused = useIsFocused()
   useEffect(() => {
     //getLab(athletes[2].email)
-    //getDat(athletes[2].email)
+    // getDat(athletes[2].email)acw
     graphData = graphData
     graphLabels = graphLabels
     global.data = global.data
@@ -68,8 +76,10 @@ function CoachHome({navigation, route}) {
         const docRef = doc(db, "users", email, 'data', 'acwr');
         const docSnap = await getDoc(docRef);
         graphData = docSnap.data().values
-        comments = docSnap.data().comments
-        console.log(comments)
+        datedata = docSnap.data().dates
+        // console.log(datedata)
+        datecomments = docSnap.data().comments
+        console.log(datecomments)
         setIsLoading(false)
         return docSnap.data().values
     }
@@ -118,7 +128,41 @@ function CoachHome({navigation, route}) {
         data: global.data.acwr
       },
     ];
+
+    const resetDotData = () => {
+        setAthleteName(null)
+        setDate(null)
+        setACWR(null)
+        setCommentsDate(null)
+    }
     
+    const fetchDotData = (index) => {
+        setDotSelected(!dotSelected)
+        setACWR(graphData[index].toFixed(2));
+        setDate(datedata[index]);
+        // console.log(datecomments)
+        setCommentsDate(datecomments[index])
+
+    }
+
+    const fetchAthleteChange = (item) => {
+        resetDotData()
+        setAthleteName(item.name)
+        setValue(item.value);
+        setIsFocus(false);
+        getLab(item.email)
+        getDat(item.email)
+        graphData = []
+        graphLabels = []
+        setIsLoading(true)
+    }
+
+    // const fetchACWR = (index) => {
+    //     // setDateComments(comments)
+    //     setACWR(graphData[index]);
+
+    // }
+
     const CarouselCardItem = ({ item, index }) => {
       return (
         <View style={[styles.carousel,{justifyContent:'center', alignContent:'center'}]}  key={index}>
@@ -188,11 +232,12 @@ function CoachHome({navigation, route}) {
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
           <ScrollView>
             <View style={{flex: 2, justifyContent:'space-between'}}>
-                <Text style = {[styles.titleText]}>Athletes</Text>
+                {/* <Text style = {[styles.titleText]}>Athlete Data</Text> */}
+                <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Athlete Data</Text>
                     <View style={[{flex:1, paddingTop: 16, paddingBottom: 8}]}>
-                        {renderLabel('Select athlete', isFocus)}
+                        {/* {renderLabel('Select athlete', isFocus)} */}
                         <Dropdown
-                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                        style={[styles.dropdown, isFocus && { borderColor: 'blue', paddingHorizontal: 20, }]}
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
                         inputSearchStyle={styles.inputSearchStyle}
@@ -202,17 +247,18 @@ function CoachHome({navigation, route}) {
                         maxHeight={300}
                         labelField="name"
                         valueField="name"
-                        placeholder={!isFocus ? 'Athlete' : '...'}
-                        searchPlaceholder="Search..."
+                        placeholder={!isFocus ? 'Select Athlete' : 'Please select an athlete'}
+                        searchPlaceholder="Search athlete..."
                         //value={emi}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                            console.log(item.email)
-                            setValue(item.value);
-                            setIsFocus(false);
-                            getLab(item.email)
-                            getDat(item.email)
+                            fetchAthleteChange(item)
+                            // console.log(item.email)
+                            // setValue(item.value);
+                            // setIsFocus(false);
+                            // getLab(item.email)
+                            // getDat(item.email)
                         }}
                         renderLeftIcon={() => (
                             <MaterialIcons
@@ -262,10 +308,14 @@ function CoachHome({navigation, route}) {
                 </View>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>{clickedPerson}</Text>
+                        <Text style={styles.subheadingText}>{clickedPerson}</Text>
                         {!isLoading ? (
                         <View>
+                            <Text style={[styles.subheading, {textAlign: 'center'}]}>{athleteName}</Text>
                             <LineChart
+                            onDataPointClick={({index}) => {
+                                fetchDotData(index);
+                              }}
                         data={{
                         //labels: global.data.date.slice(-7),
                         //labels: chartLabels(),
@@ -279,8 +329,8 @@ function CoachHome({navigation, route}) {
                             }
                         ]
                         }}
-                        width={Dimensions.get("window").width - 40} // from react-native
-                        height={250}
+                        width={Dimensions.get("window").width - 30} // from react-native
+                        height={300}
                         //yAxisLabel="$"
                         //yAxisSuffix="k"
                         yAxisInterval={1} // optional, defaults to 1
@@ -302,33 +352,51 @@ function CoachHome({navigation, route}) {
                         }}
                         bezier
                         style={{
-                            marginVertical: 10,
-                            borderRadius: 10
+                            // marginVertical: 10,
+                            borderRadius: 1
                         }}
                         />
-                        </View>
-                        ) : (
-                            <ActivityIndicator size="large" animating={true} color = 'gray' style={{paddingBottom:10}}/>
-                        )}
-                        <Pressable
-                            style={[styles.button, styles.buttonClose]}
+                        {/* <TouchableOpacity
+                            style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:35, flex:1, paddingTop: 4, borderWidth: 2, marginHorizontal: 20, marginBottom: 30}]}
                             onPress={() => {
                                 //setModalVisible(!modalVisible)
-                                graphData = []
-                                graphLabels = []
-                                setIsLoading(true)
+                                // graphData = []
+                                // graphLabels = []
+                                // setIsLoading(true)
                             }
                             }
                         >
-                            <Text style={styles.textStyle}>Close</Text>
-                        </Pressable>
-                    </View>
-                    <View>
-                        <Text style={styles.modalText}>Comments</Text>
-                        { comments.map((item, key)=>(
-                        <Text key={key} style={styles.TextStyle}> { item } </Text>)
+                            <Text style={styles.buttontext}>Close Athlete Graph</Text>
+                        </TouchableOpacity> */}
+
+                <Text style={styles.finetext}>Select data point to view more information.</Text>
+<ScrollView style={styles.dateInfoBox}>
+                    <View style={styles.infobox}>
+                    <Text style={styles.datetext}>Date</Text><Text style={styles.datetext}>{date}</Text>
+        
+          </View>
+          <View style={styles.infobox}>
+            <Text style={styles.boxsubheading}>ACWR</Text>
+            <Text style={[styles.boxText, {color: pickCol(Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100)}]}>
+                                {acwr}
+                            </Text>
+          </View>
+          <View style={styles.commentsbox}>
+            <Text style={styles.boxsubheading}>Comments</Text>
+            <Text style={styles.boxText}>{ commentsDate }</Text>
+          </View>
+          </ScrollView>
+
+
+
+                        </View>
+    
+                        ) : (
+                            <>
+                            <Text style={styles.subheadingText2}>No data. Please select an athlete to view.</Text>
+                            {/* <ActivityIndicator size="large" animating={true} color = 'gray' style={{paddingBottom:10}}/> */}
+                            </>
                         )}
-                        <Text style={styles.modalText}>Target</Text>
                     </View>
                 </View>
             </ScrollView>
@@ -371,6 +439,35 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         marginBottom: 10,
     },
+    titleText: {
+        padding: 10,
+        paddingTop: 30,
+        fontSize: 28,
+        fontWeight: "700",
+        marginBottom: 10,
+        paddingHorizontal: 10,
+    },
+    subheadingText: {
+        padding: 10,
+        fontSize: 18,
+        fontWeight: "600",
+        marginBottom: 10,
+    },
+    valuetext: {
+        paddingVertical: 10,
+        paddingRight: 10,
+        fontSize: 18,
+        fontWeight: "800",
+        marginBottom: 10,
+    },
+    subheadingText2: {
+        padding: 20,
+        marginTop: 100,
+        marginBottom: 50,
+        fontSize: 16,
+        fontWeight: "500",
+        textAlign: 'center',
+    },
     roundButton1: {
         //justifyContent: 'center',
         //alignItems: 'center',
@@ -378,10 +475,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'orange',
     },
     roundbuttontext1: {
-        fontSize: 32,
+        fontSize: 18,
         fontWeight: '700',
         marginVertical: 20,
         paddingHorizontal: 10,
+        textAlign: 'center',
+    },
+    buttontext: {
+        fontSize: 18,
+        fontWeight: "600",
         textAlign: 'center',
     },
     profileIcon: {
@@ -419,6 +521,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#fff'
     },
+    datetext: {
+        color: "black",
+        textAlign: "center",
+        fontWeight: '800',
+        fontSize: 22,
+        marginVertical:20,  
+      },
     text: {
         color: '#fff',
         textAlign: 'center',
@@ -431,6 +540,20 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         paddingVertical: 5,
+    },
+    commentsText: {
+        fontSize: 18,
+        paddingLeft: 20,
+        fontWeight: "600",
+        marginBottom: 10,
+    },
+    dropdown: {
+        paddingHorizontal: 20,
+        borderRadius: 20,
+    },
+    placeholder: {
+        fontSize: 18,
+        fontWeight: "600",
     },
     centersubheading: {
         fontSize: 22,
@@ -479,6 +602,34 @@ const styles = StyleSheet.create({
       paddingVertical: 28,
 
   },
+  boxsubheading : {
+    fontWeight: '700',
+    fontSize: 18,
+  },
+  dateInfoBox: {
+    marginHorizontal:20,
+    padding: 10,
+    flex:1,
+  },
+  infobox:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 26,
+    paddingVertical:17,
+    borderBottomWidth: 0.5,
+  },
+  commentsbox: {
+    justifyContent: 'space-between',
+    marginHorizontal: 26,
+    paddingVertical:17,
+    // borderTopWidth: 0.5,
+  },
+  boxText:{
+    color: 'black',
+    fontWeight: '800',
+    textAlign: "left",
+    fontSize: 20,
+  },
     goalsbutton:{
       backgroundColor: '#f0f0f0',
       width:200,
@@ -516,6 +667,11 @@ const styles = StyleSheet.create({
       borderBottomRightRadius: 10,
       backgroundColor: "#f0f0f0",
     },
+    finetext: {
+        fontSize: 10,
+        marginHorizontal: 55,
+        
+    }
 });
 
 

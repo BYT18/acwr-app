@@ -73,21 +73,21 @@ const App = ({navigation}) => {
           //options={{ 
           options={({ navigation }) => ({
             gestureEnabled: false,
-            headerTitle: 'ACWR',
+            headerShown: false,
             headerStyle: {
               //backgroundColor: '#f4511e',
             },
-            headerRight: () => (
-              <TouchableOpacity onPress={() => 
-                //alert('This is a button!')
-                //navigation.navigate('Register')
-                navigation.navigate('Settings')
-                //signOut()
-              }>
-                  <MaterialIcons name='settings' size={30} color="black">
-                  </MaterialIcons>
-              </TouchableOpacity>
-            ),
+            // headerRight: () => (
+            //   <TouchableOpacity onPress={() => 
+            //     //alert('This is a button!')
+            //     //navigation.navigate('Register')
+            //     navigation.navigate('Settings')
+            //     //signOut()
+            //   }>
+            //       <MaterialIcons name='settings' size={30} color="black">
+            //       </MaterialIcons>
+            //   </TouchableOpacity>
+            // ),
             headerLeft: () => (
               <TouchableOpacity onPress={() => 
                 //alert('This is a button!')
@@ -109,31 +109,35 @@ const App = ({navigation}) => {
         <Stack.Screen 
           name="CoachHomeNav" 
           component={CoachHomeNav} 
-          options={({ navigation }) => ({
-            headerTitle: 'ACWR',
-            headerRight: () => (
-              <TouchableOpacity onPress={() => 
-                //alert('This is a button!')
-                //navigation.navigate('Register')
-                navigation.navigate('CoachSettings')
-                //signOut()
-              }>
-                  <MaterialIcons name='settings' size={30} color="black">
-                  </MaterialIcons>
-              </TouchableOpacity>
-            ),
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => 
-                //alert('This is a button!')
-                //navigation.navigate('Register')
-                navigation.navigate('Report')
-                //signOut()
-              }>
-                  <MaterialIcons name='add' size={30} color="black">
-                  </MaterialIcons>
-              </TouchableOpacity>
-            ),
-          })}
+          options={{
+            headerShown: false,
+            gestureEnabled: false,
+          }}
+          // options={({ navigation }) => ({
+          //   headerTitle: 'ACWR',
+          //   headerRight: () => (
+          //     <TouchableOpacity onPress={() => 
+          //       //alert('This is a button!')
+          //       //navigation.navigate('Register')
+          //       navigation.navigate('CoachSettings')
+          //       //signOut()
+          //     }>
+          //         <MaterialIcons name='settings' size={30} color="black">
+          //         </MaterialIcons>
+          //     </TouchableOpacity>
+          //   ),
+          //   headerLeft: () => (
+          //     <TouchableOpacity onPress={() => 
+          //       //alert('This is a button!')
+          //       //navigation.navigate('Register')
+          //       navigation.navigate('Report')
+          //       //signOut()
+          //     }>
+          //         <MaterialIcons name='add' size={30} color="black">
+          //         </MaterialIcons>
+          //     </TouchableOpacity>
+          //   ),
+          // })}
         />
         <Stack.Screen 
           name="Register" 

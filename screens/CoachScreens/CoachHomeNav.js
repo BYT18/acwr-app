@@ -95,19 +95,6 @@ function CoachHomeNav() {
       activeColor="black"
       barStyle={{ backgroundColor: 'white' }}
     >
-      {/*<Stack.Screen 
-        name="Home" 
-        component={CoachHome} 
-        options={{
-          // unmountOnBlur: true,
-          tabBarLabel: 'Home',
-          tabBarColor:'white',
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name='home' size={24} color={color}></MaterialIcons>
-          ),
-        }}
-        listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
-      />*/}
       <Stack.Screen 
         name="Home" 
         component={CoachHome} 
@@ -126,10 +113,23 @@ function CoachHomeNav() {
         component={CoachShare} 
         options={{
           // unmountOnBlur: true,
-          tabBarLabel: 'Athletes',
+          tabBarLabel: 'Team',
           tabBarColor:'white',
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='people' size={24} color={color}></MaterialIcons>
+          ),
+        }}
+        listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
+      />
+      <Stack.Screen 
+        name="Profile" 
+        component={CoachSettings} 
+        options={{
+          // unmountOnBlur: true,
+          tabBarLabel: 'Settings',
+          tabBarColor:'white',
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name='settings' size={24} color={color}></MaterialIcons>
           ),
         }}
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}

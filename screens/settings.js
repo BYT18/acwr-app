@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState, useRef, Component, useEffect} from 'react';
-import { StyleSheet, Pressable, Text, View, SafeAreaView, TextInput, TouchableOpacity, Modal, Button, Switch} from 'react-native';
+import { Image, StyleSheet, Pressable, Text, View, SafeAreaView, TextInput, TouchableOpacity, Modal, Button, Switch, ScrollView} from 'react-native';
 import { MaterialIcons} from '@expo/vector-icons';
 import { getAuth, signOut } from "firebase/auth";
 import {Picker} from '@react-native-picker/picker';
@@ -15,6 +15,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 //import { thisUser } from './login';
 import {thisUser} from './homeNav'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
+import ACWREntry from '../components/ACWREntry';
 //console.log(thisUser.notiTime.toDate().getMinutes()+'testingbigtime'+parseInt(thisUser.notiTime.toDate().getHours()))
 
 Notifications.setNotificationHandler({
@@ -240,15 +241,18 @@ const settings = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
+                            <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Settings</Text>
+                            <ScrollView>
                 <View style={[{flex:3}]}>
-                    <View style={[{padding: 20}]}>
-                        <Text style={[{fontWeight: '500', fontSize: 18, paddingBottom: 5}]}>
-                            Username
-                        </Text>
+                
+
+                    <View style={[{padding: 2, alignItems: 'center'}]}>
+                    <Image source={require('./assets/profilepic.png')} style={{width:135, height: 135}}/>
+
                         <TextInput
-                            style={styles.input}
+                            style={styles.blankInput}
                             onChangeText={onChangeUsername}
-                            value={username}
+                            value={username.toUpperCase()}
                             clearButtonMode={true}
                             //placeholderTextColor='red'
                         />       
@@ -258,7 +262,7 @@ const settings = ({navigation}) => {
                             Email
                         </Text>
                         <TextInput
-                            style={styles.input}
+                            style={styles.emailinput}
                             onChangeText={onChangeEmail}
                             value={email}
                             clearButtonMode={true}
@@ -355,8 +359,14 @@ const settings = ({navigation}) => {
                             <Picker.Item label="Varisty Blues" value="js" />
                         </Picker>*/}
                     </View>
+                    <View style={[{alignItems:'center', flex:1, marginTop: 20}]}>
+                
+                        <TouchableOpacity style = {styles.signoutbutton} onPress = {signOut}>
+                            <Text style = {styles.signoutbuttontext}>Sign Out</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={[{flex:1, paddingTop: 50}]}>
+                <View style={[{ paddingTop: 50}]}>
                     <View style={[{alignItems:'center', flexDirection:'row', justifyContent:'center'}]}>
                         <TouchableOpacity onPress = {() => setTimeModalVisible(!timeModalVisible)}>
                             <Text style={[{paddingRight: 20, fontWeight: '500', fontSize: 20}]}>Notifications</Text>
@@ -369,14 +379,22 @@ const settings = ({navigation}) => {
                             value={isEnabled}
                         />
                     </View>
-                    <View style={[{padding:30, alignItems:'center', flex:1}]}>
+                    <View style={[{flex:1, paddingTop: 20}]}>
+                    
+                    {/* <View>
+                    <Button color = 'red' title = 'Delete Data' style = {styles.button}/>
+                    </View> */}
+                </View>
+                    {/* <View style={[{padding:30, alignItems:'center', flex:1}]}>
                         <Button color = 'red' title = 'Delete Data' style = {styles.button} onPress = {
                             //clearData
                             () => setModalVisible(!modalVisible)
                             }/>
                         <Button title = 'Sign Out' style = {styles.button} color = 'black' onPress = {signOut}/>
-                    </View>
+                    </View> */}
                 </View>
+                </ScrollView>
+
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -445,6 +463,7 @@ const settings = ({navigation}) => {
                     </View>
                 </View>
             </Modal>
+            <ACWREntry />
         </SafeAreaView>
     );
 }
@@ -517,15 +536,14 @@ const styles = StyleSheet.create({
         //fontFamily:'Helvetica',
         //color:'white'
     },
-    input:{
-        padding:5,
+
+    blankInput:{
         marginBottom: 2,
-        borderWidth:1.5,
-        fontWeight:'200',
-        //fontFamily:'Helvetica',
+        fontWeight:'700',
         height:50,
         borderRadius: 8,
-        fontSize: 20
+        fontSize: 25,
+        textAlign: 'center'
     },
     buttonOpen: {
         backgroundColor: "#F194FF",
@@ -678,6 +696,37 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 16,
       },
+      emailinput:{
+        marginBottom: 2,
+        alignContent: 'middle',
+        fontSize: 15,
+        fontWeight:'500',
+        //fontFamily:'Helvetica',
+        height:50,
+        borderRadius: 8,
+        fontSize: 20
+    },
+    teamcode:{
+        marginBottom: 2,
+        fontSize: 15,
+        fontWeight:'500',
+        //fontFamily:'Helvetica',
+        height:50,
+        borderRadius: 8,
+        fontSize: 20
+    },
+    signoutbutton: {
+        backgroundColor: 'black',
+        paddingHorizontal: 70,
+        paddingVertical: 12,
+        borderRadius: 8,
+    
+    },
+    signoutbuttontext: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: 'white',
+    },
 });
 
 export default settings;

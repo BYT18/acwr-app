@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState, useRef, Component} from 'react';
-import { StyleSheet, Pressable, Text, View, SafeAreaView, TextInput, TouchableOpacity, Modal,Animated, PanResponder, Button} from 'react-native';
+import { Image, StyleSheet, Pressable, Text, View, SafeAreaView, TextInput, TouchableOpacity, Modal,Animated, PanResponder, Button} from 'react-native';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { getAuth, signOut } from "firebase/auth";
 import {Picker} from '@react-native-picker/picker';
@@ -79,45 +79,51 @@ const CoachSettings = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={[{flex:2}]}>
-                    <View style={[{padding: 20}]}>
-                        <Text style={[{fontWeight: '500', fontSize: 25, paddingBottom: 5}]}>
-                            Username
-                        </Text>
+            {/* <Text style = {[styles.titleText]}>Profile</Text> */}
+            <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Settings</Text>
+                    <View style={[{padding: 2, alignItems: 'center'}]}>
+                    <Image source={require('./assets/profilepic.png')} style={{width:145, height: 145}}/>
+
                         <TextInput
-                            style={styles.input}
+                            style={styles.blankInput}
                             onChangeText={onChangeUsername}
-                            value={username}
+                            value={username.toUpperCase()}
                             clearButtonMode={true}
                             //placeholderTextColor='red'
                         />       
                     </View>
                     <View style={[{paddingHorizontal: 20, paddingBottom: 20}]}>
-                        <Text style={[{fontWeight: '500', fontSize: 25, paddingBottom: 5}]}>
+                    <Text style={[{fontWeight: '600', fontSize: 21, paddingBottom: 5}]}>
                             Email
                         </Text>
                         <TextInput
-                            style={styles.input}
+                            style={styles.emailinput}
                             onChangeText={onChangeEmail}
                             value={email}
                             clearButtonMode={true}
                         />       
                     </View>
                     <View style={[{paddingHorizontal: 20, paddingBottom: 20}]}>
-                        <Text style={[{fontWeight: '500', fontSize: 25, paddingBottom: 5}]}>
+                        <Text style={[{fontWeight: '600', fontSize: 21, paddingBottom: 5}]}>
                             Team Code
                         </Text>
                         <TextInput
-                            style={styles.input}
+                            style={styles.teamcode}
                             value={thisUser.teamID}
                             clearButtonMode={true}
                         />       
                     </View>
                 </View>
                 <View style={[{flex:1, paddingTop: 50}]}>
-                    <View style={[{padding:30, alignItems:'center', flex:1}]}>
-                        <Button color = 'red' title = 'Delete Data' style = {styles.button}/>
-                        <Button title = 'Sign Out' style = {styles.button} color = 'black' onPress = {signOut}/>
+                    <View style={[{alignItems:'center', flex:1}]}>
+                
+                        <TouchableOpacity style = {styles.signoutbutton} onPress = {signOut}>
+                            <Text style = {styles.signoutbuttontext}>Sign Out</Text>
+                        </TouchableOpacity>
                     </View>
+                    {/* <View>
+                    <Button color = 'red' title = 'Delete Data' style = {styles.button}/>
+                    </View> */}
                 </View>
             <Modal
                 animationType="slide"
@@ -191,12 +197,40 @@ const styles = StyleSheet.create({
         fontFamily:'Helvetica',
         //color:'white'
     },
+
+    blankInput:{
+        marginBottom: 2,
+        fontWeight:'700',
+        height:50,
+        borderRadius: 8,
+        fontSize: 25,
+        textAlign: 'center'
+    },
+    teamcode:{
+        marginBottom: 2,
+        fontSize: 15,
+        fontWeight:'500',
+        //fontFamily:'Helvetica',
+        height:50,
+        borderRadius: 8,
+        fontSize: 20
+    },
+    emailinput:{
+        marginBottom: 2,
+        alignContent: 'middle',
+        fontSize: 15,
+        fontWeight:'500',
+        //fontFamily:'Helvetica',
+        height:50,
+        borderRadius: 8,
+        fontSize: 20
+    },
     input:{
         padding:5,
         marginBottom: 2,
         fontSize: 15,
         borderWidth:1.5,
-        fontWeight:'200',
+        fontWeight:'500',
         //fontFamily:'Helvetica',
         height:50,
         borderRadius: 8,
@@ -301,17 +335,32 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10
     },
-    titleText: {
-        fontSize: 14,
-        lineHeight: 24,
-        fontWeight: "bold"
-      },
     box: {
         height: 150,
         width: 150,
         backgroundColor: "blue",
         borderRadius: 5
-    }
+    },
+    signoutbutton: {
+        backgroundColor: 'black',
+        paddingHorizontal: 70,
+        paddingVertical: 12,
+        borderRadius: 8,
+    
+    },
+    signoutbuttontext: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: 'white',
+    },
+    titleText: {
+        padding: 10,
+        paddingTop: 30,
+        fontSize: 28,
+        fontWeight: "700",
+        marginBottom: 10,
+        paddingHorizontal: 10,
+    },
 });
 
 export default CoachSettings;

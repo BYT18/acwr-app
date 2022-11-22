@@ -6,6 +6,7 @@ import { useIsFocused } from '@react-navigation/native'
 import {db} from "./Firebase";
 import {collection, addDoc, query, where, getDoc, deleteDoc, doc, setDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore"; 
 import { thisUser } from './homeNav';
+import ACWREntry from '../components/ACWREntry';
 
 //console.log({year: new Date().getFullYear(), day: new Date().getDate()}.year)
 const nowDate = new Date(); 
@@ -173,6 +174,7 @@ export default class Calendar extends Component {
 
     return (
       <View style={styles.container}>
+                    <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 40, paddingBottom: 25}]}>Calendar</Text>
         <CalendarPicker
           onDateChange={this.onDateChange}
           todayBackgroundColor = 'black'
@@ -272,7 +274,9 @@ export default class Calendar extends Component {
               </View>
           </View>
         </Modal> */}
+        <ACWREntry />
       </View>
+
     );
   }
 }
@@ -282,7 +286,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
     flexDirection:'column',
-    paddingTop: 10,
+    paddingTop: 30,
   },
   modalView: {
     margin: 5,
