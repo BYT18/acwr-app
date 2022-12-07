@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
-import { StyleSheet, Button, Text, View, SafeAreaView, Platform, TouchableOpacity, Pressable, FlatList, RefreshControl, Dimensions, ScrollView, ActivityIndicator} from 'react-native';
+import { StyleSheet, Button, Text, View, SafeAreaView, Platform, TouchableOpacity, Pressable, FlatList, RefreshControl, Dimensions, ScrollView, ActivityIndicator, Modal} from 'react-native';
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc} from "firebase/firestore"; 
 import { auth, db } from '../Firebase';
 import { useIsFocused } from '@react-navigation/native'
@@ -20,12 +20,17 @@ import { MaterialIcons, AntDesign } from '@expo/vector-icons';
 
 import { thisUser } from '../homeNav';
 import { athletes, athList } from './CoachHomeNav';
+import ACWREntry from '../../components/ACWREntry';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-var goals = []
+
+
+var goals = [];
 var graphLabels = []
 var graphData = []
 var datecomments = []
 var datedata = []
+var startDate = null
 const SLIDER_WIDTH = Dimensions.get('window').width + 80
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.75)
 
@@ -37,12 +42,41 @@ function CoachHome({navigation, route}) {
   const [clickedPerson, setClickedPerson] = React.useState('');
   const [isLoading, setIsLoading] = useState(true);
   
-
+  const [open, setOpen] = useState(false)
   const [dotSelected, setDotSelected] = useState();
   const [date, setDate] = useState();
+  const [startdate, setstartDate] = useState(new Date());
   const [acwr, setACWR] = useState();
   const [commentsDate, setCommentsDate] = useState([]);
   const [athleteName, setAthleteName] = useState();
+  const [enddate, setenddate] = useState(new Date());
+  const [startOpen, setStartOpen] = useState(true);
+  const [endOpen, setEndOpen] = useState(false);
+
+  const onStartChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setstartDate(selectedDate)
+
+  };
+
+  const onEndChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setenddate(selectedDate)
+
+  };
+
+  const showMode = (currentMode) => {
+    if (Platform.OS === 'android') {
+      setShow(false);
+      // for iOS, add a button that closes the picker
+    }
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
   
   const renderLabel = (label, foc) => {
     if (value || foc) {
@@ -227,15 +261,51 @@ function CoachHome({navigation, route}) {
             return 'red'
           }
     }
+
   
     return (
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
           <ScrollView>
+          <View style={styles.container}>
+        
+      </View>
             <View style={{flex: 2, justifyContent:'space-between'}}>
                 {/* <Text style = {[styles.titleText]}>Athlete Data</Text> */}
+           
                 <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Athlete Data</Text>
+                <View style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30, flex: 1, flex: 'row', }]}>
+                <Text style={[{fontWeight: "600", fontSize: 18, paddingHorizontal: 10}]}>Start Date</Text>
+                <View>
+                            <DateTimePicker
+                              testID="dateTimePicker"
+                              value={startdate}
+                              mode={"date"}
+                              onChange={onStartChange}
+                            />
+                        </View>
+                </View>
+
+                <View style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30, flex: 1, flex: 'row', }]}>
+                <Text style={[{fontWeight: "600", fontSize: 18, paddingHorizontal: 10}]}>End Date</Text>
+                <View>
+                <DateTimePicker
+                              testID="dateTimePicker"
+                              value={enddate}
+                              mode={"date"}
+                              onChange={onEndChange}
+                            />
+                        </View>
+                </View>
+           
+
+               
                     <View style={[{flex:1, paddingTop: 16, paddingBottom: 8}]}>
                         {/* {renderLabel('Select athlete', isFocus)} */}
+
+
+                        
+                
+
                         <Dropdown
                         style={[styles.dropdown, isFocus && { borderColor: 'blue', paddingHorizontal: 20, }]}
                         placeholderStyle={styles.placeholderStyle}
@@ -271,38 +341,7 @@ function CoachHome({navigation, route}) {
                         />
                         <View style={{flex:1,}}>
 
-                  {/*<Carousel
-                      layout="stack"
-                      layoutCardOffset={0}
-                      ref={isCarousel}
-                      data={data}
-                      renderItem={CarouselCardItem}
-                      sliderWidth={SLIDER_WIDTH}
-                      itemWidth={ITEM_WIDTH}
-                      inactiveSlideShift={0}
-                      useScrollView={true}
-                      onSnapToItem={(index) => setCarInd(index) }
-                        />   
-                </View>
-                        <View style={{flex: 20, marginTop: -40, marginBottom: 5,}}>
-                            <Pagination
-                            dotsLength={data.length}
-                            activeDotIndex={carInd}
-                            carouselRef={isCarousel}
-                            dotStyle={{
-                                width: 10,
-                                height: 10,
-                                borderRadius: 5,
-                                marginHorizontal: 2,
-                                backgroundColor: '#000',
-                            }}
-                            tappableDots={true}
-                            inactiveDotStyle={{
-                                backgroundColor: 'black',
-                            }}
-                            inactiveDotOpacity={0.4}
-                            inactiveDotScale={1}
-                            />    */}
+                 
                         </View> 
                     </View>
                 </View>
@@ -400,6 +439,7 @@ function CoachHome({navigation, route}) {
                     </View>
                 </View>
             </ScrollView>
+            <ACWREntry />
         </SafeAreaView>
     );
 }

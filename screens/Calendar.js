@@ -191,16 +191,13 @@ export default class Calendar extends Component {
               <EditButton showButton={this.isInThePast(startDate)} />
             {/* </TouchableOpacity> */}
             </View>
+
           <View style={styles.infobox}>
-            <Text style={styles.boxsubheading}>Time:</Text>
-            <Text style={styles.boxText}>{ global.data.time[global.data.date.indexOf(startDate)] }</Text>
+            <Text style={styles.boxsubheading}>Time</Text><Text style={styles.boxsubheading}>Load</Text><Text style={styles.boxsubheading}>ACWR</Text>
           </View>
           <View style={styles.infobox}>
-            <Text style={styles.boxsubheading}>Perceived Load:</Text>
+          <Text style={styles.boxText}>{ (global.data.time[global.data.date.indexOf(startDate)])/60} hrs.</Text>
             <Text style={styles.boxText}>{ global.data.percieved[global.data.date.indexOf(startDate)]}</Text>
-          </View>
-          <View style={styles.infobox}>
-            <Text style={styles.boxsubheading}>ACWR:</Text>
             <Text style={styles.boxText}>{ Math.round(global.data.acwr[global.data.date.indexOf(startDate)]* 100) / 100 }</Text>
           </View>
 

@@ -381,17 +381,17 @@ const settings = ({navigation}) => {
                     </View>
                     <View style={[{flex:1, paddingTop: 20}]}>
                     
-                    {/* <View>
-                    <Button color = 'red' title = 'Delete Data' style = {styles.button}/>
-                    </View> */}
+                    <View>
+                    {/* <Button color = 'red' title = 'Delete Data' style = {styles.button}/> */}
+                    </View>
                 </View>
-                    {/* <View style={[{padding:30, alignItems:'center', flex:1}]}>
+                    <View style={[{padding:30, alignItems:'center', flex:1}]}>
                         <Button color = 'red' title = 'Delete Data' style = {styles.button} onPress = {
                             //clearData
                             () => setModalVisible(!modalVisible)
                             }/>
-                        <Button title = 'Sign Out' style = {styles.button} color = 'black' onPress = {signOut}/>
-                    </View> */}
+                        {/* <Button title = 'Sign Out' style = {styles.button} color = 'black' onPress = {signOut}/> */}
+                    </View>
                 </View>
                 </ScrollView>
 

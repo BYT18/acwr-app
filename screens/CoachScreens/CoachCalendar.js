@@ -9,6 +9,7 @@ import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getD
 import { auth, db } from '../Firebase'
 import { thisUser } from './CoachHomeNav';
 
+
 //console.log({year: new Date().getFullYear(), day: new Date().getDate()}.year)
 const nowDate = new Date(); 
 const date = nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate();

@@ -18,6 +18,7 @@ import {
     ContributionGraph,
     StackedBarChart
 } from "react-native-chart-kit";
+import ACWREntry from '../../components/ACWREntry';
 
 
 const wait = (timeout) => {
@@ -249,7 +250,7 @@ function CoachShare({navigation}) {
                 }
             >
                 <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Team List</Text>
-                <View style={[{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 15, fontWeight: "800", fontSize: 18}]}>
+                <View style={[{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingTop: 20, fontWeight: "800", fontSize: 18}]}>
                 <Text style={[{fontWeight: "600", fontSize: 21}]}>Name</Text><Text style={[{fontWeight: "600", fontSize: 21}]}>ACWR</Text>
                 </View>
                 {athletes.map(item => (
@@ -280,6 +281,7 @@ function CoachShare({navigation}) {
                     </View>
                 ))}
             </ScrollView>
+            <ACWREntry />
         </SafeAreaView>
     );
 }

@@ -5,6 +5,7 @@ import { getAuth, signOut } from "firebase/auth";
 import {Picker} from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {thisUser} from './CoachHomeNav'
+import ACWREntry from '../../components/ACWREntry';
 
 
 const CoachSettings = ({navigation}) => {
@@ -156,6 +157,7 @@ const CoachSettings = ({navigation}) => {
                     </View>
                 </View>
             </Modal>
+            <ACWREntry />
         </SafeAreaView>
     );
 }
