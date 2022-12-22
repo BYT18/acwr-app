@@ -161,6 +161,7 @@ function report({navigation, route}) {
             descVar = global.data.desc[global.data.date.indexOf(showDate())]
             slideVar = global.data.percieved[global.data.date.indexOf(showDate())]
             wheelVar = global.data.time[global.data.date.indexOf(showDate())]
+            //durationSlideVar = global.data.time[global.data.date.indexOf(showDate())]
             if (!selected) {
                 setSelected([min, global.data.time[global.data.date.indexOf(showDate())] / 60]);
             }
@@ -271,7 +272,8 @@ function report({navigation, route}) {
         // var current = time * slide
         //when on multislider
         //var current = ((selected[1] - selected[0])*60) * slide
-        var current = (durationSlide)*60 * slide
+        //var current = (durationSlide)*60*slide
+        var current = (durationSlide)*60
         var acwrNew = 0
         var acuteNew = 0
         var chronicNew = 0
@@ -391,7 +393,8 @@ function report({navigation, route}) {
                 global.data.acute[global.data.date.indexOf(showDate())] = acuteNew 
                 //global.data.time[global.data.date.indexOf(showDate())] = time
                 // global.data.time[global.data.date.indexOf(showDate())] =  (selected[1] - selected[0])*60
-                global.data.time[global.data.date.indexOf(showDate())] =  (selected)*60
+                //global.data.time[global.data.date.indexOf(showDate())] =  (selected)*60
+                global.data.time[global.data.date.indexOf(showDate())] =  (durationSlide)*60
                 global.data.chronic[global.data.date.indexOf(showDate())] = chronicNew 
                 global.data.percieved[global.data.date.indexOf(showDate())] = slide
                 global.data.acwr[global.data.date.indexOf(showDate())] = acwrNew
@@ -408,7 +411,7 @@ function report({navigation, route}) {
                     acwr: acwrNew, 
                     name: thisUser.name
                 })
-                updateDoc(doc(db, "users", email, 'data', 'acwr'), {
+                updateDoc(doc(db, "users", thisUser.email.toLowerCase(), 'data', 'acwr'), {
                     values: arrayUnion(acwrNew),
                     dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()),
                     comments: arrayUnion(comm),
