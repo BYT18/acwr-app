@@ -254,7 +254,7 @@ function CoachShare({navigation}) {
                 <Text style={[{fontWeight: "600", fontSize: 21}]}>Name</Text><Text style={[{fontWeight: "600", fontSize: 21}]}>ACWR</Text>
                 </View>
                 {athletes.map(item => (
-                    <View key={item.key} style={[{ justifyContent: "space-evenly" }, { flexDirection: "row", marginTop: 20, }]}>
+                    <View key={item.key} style={[{ justifyContent: "space-evenly"}, { flexDirection: "row", marginTop: 20, }]}>
                         <View style={styles.item}>
                             <View key={item.key} style={[ { flexDirection: "row" }]}>
                             
@@ -266,12 +266,15 @@ function CoachShare({navigation}) {
 
                                 <View style={styles.acwrbox}>
 
-                                <View  style={[styles.statusBox,{backgroundColor: statCol(item.status)}]}>
-                                    <Text style={[styles.statusText]}>
+                                {/* <View  style={[styles.statusBox,{backgroundColor: statCol(item.status)}]}>
+                                 */}
+                                   <View  style={[styles.statusBox]}>
+
+                                    {/* <Text style={[styles.statusText]}>
                                         {item.status}
-                                    </Text>
+                                    </Text> */}
                                 </View>
-                                <View>
+                                <View style={styles.acwrtext}>
                                 {alert(Math.round(item.acwr * 100) / 100)}
                                 </View>
                                 </View>
@@ -410,7 +413,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 15,
     },
     acwrtext: {
-        fontSize:18, 
+        fontSize:10, 
         fontWeight: '800',
     },
     

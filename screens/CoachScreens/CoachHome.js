@@ -29,7 +29,18 @@ var goals = [];
 var graphLabels = []
 var graphData = []
 var datecomments = []
+var datedescriptions = []
 var datedata = []
+var arrayofdates = []
+var today = new Date();
+var filteredindices = [];
+var sortedindices = [];
+var indices = [];
+var filteredacwr = [];
+var filtereddates = [];
+var filteredcomments = [];
+var filtereddescriptions = [];
+
 var startDate = null
 const SLIDER_WIDTH = Dimensions.get('window').width + 80
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.75)
@@ -45,24 +56,34 @@ function CoachHome({navigation, route}) {
   const [open, setOpen] = useState(false)
   const [dotSelected, setDotSelected] = useState();
   const [date, setDate] = useState();
-  const [startdate, setstartDate] = useState(new Date());
+  const [startdate, setstartDate] = useState(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7));
   const [acwr, setACWR] = useState();
   const [commentsDate, setCommentsDate] = useState([]);
+  const [descriptionsDate, setDescriptionsDate] = useState([]);
   const [athleteName, setAthleteName] = useState();
   const [enddate, setenddate] = useState(new Date());
   const [startOpen, setStartOpen] = useState(true);
   const [endOpen, setEndOpen] = useState(false);
 
+  const resetOnChange = () => {
+    filteredindices=[]
+    filteredacwr=[]
+    filteredcomments=[]
+    filtereddates=[]
+    sortedindices=[]
+    indices=[]
+  }
+
   const onStartChange = (event, selectedDate) => {
+    resetOnChange()
     const currentDate = selectedDate;
     setstartDate(selectedDate)
-
   };
 
   const onEndChange = (event, selectedDate) => {
+    resetOnChange()
     const currentDate = selectedDate;
     setenddate(selectedDate)
-
   };
 
   const showMode = (currentMode) => {
@@ -96,7 +117,15 @@ function CoachHome({navigation, route}) {
     graphData = graphData
     graphLabels = graphLabels
     global.data = global.data
-  }, [isFocused, graphData, graphLabels]);
+    arrayofdates = getDatesBetween(startdate, enddate)
+    // console.log(arrayofdates)
+    // console.log(startdate, enddate)
+    filterDatabyDate()
+    // console.log(filteredindices)
+    console.log(filtereddates)
+    console.log(graphLabels)
+    console.log(filteredacwr)
+  }, [isFocused, graphData, filteredacwr, graphLabels, startdate, enddate]);
 
     const getLab = async(email) => {
         const docRef = doc(db, "users", email, 'data', 'acwr');
@@ -112,6 +141,7 @@ function CoachHome({navigation, route}) {
         graphData = docSnap.data().values
         datedata = docSnap.data().dates
         // console.log(datedata)
+        datedescriptions = docSnap.data().description
         datecomments = docSnap.data().comments
         console.log(datecomments)
         setIsLoading(false)
@@ -168,19 +198,76 @@ function CoachHome({navigation, route}) {
         setDate(null)
         setACWR(null)
         setCommentsDate(null)
+        setDescriptionsDate(null)
     }
     
     const fetchDotData = (index) => {
         setDotSelected(!dotSelected)
-        setACWR(graphData[index].toFixed(2));
-        setDate(datedata[index]);
+        setACWR(graphData[indices[index]].toFixed(2));
+        setDate(datedata[indices[index]]);
         // console.log(datecomments)
-        setCommentsDate(datecomments[index])
-
+        setCommentsDate(datecomments[indices[index]])
+        setDescriptionsDate(datedescriptions[indices[index]])
+        //indices[index] gives the index of the original array
     }
 
+
+    function getDatesBetween(date_start, date_end) {
+      // Create an array to hold the dates
+      const dates = [];
+  
+      // Set the current date to the start date
+      let currentDate = date_start;
+    
+      // Loop until the current date is the same as the end date
+      while (currentDate <= date_end) {
+        // Add the current date to the array of dates
+        dates.push(currentDate.toLocaleDateString('zh-Hans-CN'));
+    
+        // Advance the current date by one day
+        currentDate = new Date(currentDate.getTime() + 24 * 60 * 60 * 1000);
+      }
+    
+      // Return the array of dates
+      return dates;
+    }
+
+    function cmp(a, b) {
+      return a[1].localeCompare(b[1]);
+  }
+
+
+
+    const filterDatabyDate = () => {
+      let i = 0;
+      while (i <= datedata.length) {
+        if (arrayofdates.includes(datedata[i])){
+          // console.log(i)
+          filteredindices.push([i,datedata[i]])
+
+        }
+        i++
+      };
+      sortedindices = filteredindices.sort(cmp)
+      for(var x=0, len=sortedindices.length; x < len; x++){
+        indices.push(sortedindices[x][0])
+        filtereddates.push(sortedindices[x][1])
+    }
+    getGraphDatabyIndex()
+    }
+
+    const getGraphDatabyIndex = () => {
+      for(var x=0, len=indices.length; x < len; x++){
+        filteredacwr.push(graphData[indices[x]])
+    } 
+    }
+
+
+
     const fetchAthleteChange = (item) => {
-        resetDotData()
+        resetDotData() //this function resets the dot datas
+        // resetOnChange() //this function resets the filter array
+        filterDatabyDate()
         setAthleteName(item.name)
         setValue(item.value);
         setIsFocus(false);
@@ -274,7 +361,7 @@ function CoachHome({navigation, route}) {
            
                 <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Athlete Data</Text>
                 <View style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30, flex: 1, flex: 'row', }]}>
-                <Text style={[{fontWeight: "600", fontSize: 18, paddingHorizontal: 10}]}>Start Date</Text>
+                <Text style={[{fontWeight: "600", fontSize: 18, paddingHorizontal: 10}]}>From</Text>
                 <View>
                             <DateTimePicker
                               testID="dateTimePicker"
@@ -286,7 +373,7 @@ function CoachHome({navigation, route}) {
                 </View>
 
                 <View style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30, flex: 1, flex: 'row', }]}>
-                <Text style={[{fontWeight: "600", fontSize: 18, paddingHorizontal: 10}]}>End Date</Text>
+                <Text style={[{fontWeight: "600", fontSize: 18, paddingHorizontal: 10}]}>To</Text>
                 <View>
                 <DateTimePicker
                               testID="dateTimePicker"
@@ -323,6 +410,7 @@ function CoachHome({navigation, route}) {
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
+                          resetOnChange()
                             fetchAthleteChange(item)
                             // console.log(item.email)
                             // setValue(item.value);
@@ -348,7 +436,7 @@ function CoachHome({navigation, route}) {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={styles.subheadingText}>{clickedPerson}</Text>
-                        {!isLoading ? (
+                        {!isLoading && filteredacwr?.length > 0? (
                         <View>
                             <Text style={[styles.subheading, {textAlign: 'center'}]}>{athleteName}</Text>
                             <LineChart
@@ -356,24 +444,19 @@ function CoachHome({navigation, route}) {
                                 fetchDotData(index);
                               }}
                         data={{
-                        //labels: global.data.date.slice(-7),
-                        //labels: chartLabels(),
-                        labels: graphLabels,
-                        //labels: item.labels,
                         datasets: [
                             {
-                            data: graphData
-                            //data: item.data
-                            //data: getDat(clickedEmail)
+                            data: filteredacwr
+                          
                             }
                         ]
                         }}
+                        verticalLabelRotation={-80}
                         width={Dimensions.get("window").width - 30} // from react-native
                         height={300}
-                        //yAxisLabel="$"
-                        //yAxisSuffix="k"
                         yAxisInterval={1} // optional, defaults to 1
                         chartConfig={{
+                     
                         backgroundColor: "#fff",
                         backgroundGradientFrom: "#fff",
                         backgroundGradientTo: "#fff",
@@ -381,7 +464,7 @@ function CoachHome({navigation, route}) {
                         color: (opacity = 1) => `rgba(0, 69, 196, ${opacity})`,
                         labelColor: (opacity = 1) => `rgba(0, 39, 89, ${opacity})`,
                         style: {
-                            borderRadius: 1
+                            borderRadius: 1,
                         },
                         propsForDots: {
                             r: "3",
@@ -389,9 +472,8 @@ function CoachHome({navigation, route}) {
                             stroke: "#001f59"
                         }
                         }}
-                        bezier
+                        // bezier
                         style={{
-                            // marginVertical: 10,
                             borderRadius: 1
                         }}
                         />
@@ -422,7 +504,11 @@ function CoachHome({navigation, route}) {
           </View>
           <View style={styles.commentsbox}>
             <Text style={styles.boxsubheading}>Comments</Text>
-            <Text style={styles.boxText}>{ commentsDate }</Text>
+            <Text>{ commentsDate }</Text>
+          </View>
+          <View style={styles.commentsbox}>
+            <Text style={styles.boxsubheading}>Descriptions</Text>
+            <Text>{ descriptionsDate }</Text>
           </View>
           </ScrollView>
 
@@ -432,7 +518,7 @@ function CoachHome({navigation, route}) {
     
                         ) : (
                             <>
-                            <Text style={styles.subheadingText2}>No data. Please select an athlete to view.</Text>
+                            <Text style={styles.subheadingText2}>No data to display.</Text>
                             {/* <ActivityIndicator size="large" animating={true} color = 'gray' style={{paddingBottom:10}}/> */}
                             </>
                         )}
@@ -583,7 +669,7 @@ const styles = StyleSheet.create({
     },
     commentsText: {
         fontSize: 18,
-        paddingLeft: 20,
+        // paddingLeft: 20,
         fontWeight: "600",
         marginBottom: 10,
     },
