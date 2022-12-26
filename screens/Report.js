@@ -359,6 +359,7 @@ function report({navigation, route}) {
                 values: arrayUnion(acwrNew),
                 dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()),
                 comments: arrayUnion(comm),
+                description: arrayUnion(desc),
                 mood: arrayUnion(getMood(slide))
             })
         }
@@ -385,6 +386,7 @@ function report({navigation, route}) {
                     values: arrayUnion(acwrNew),
                     dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()),
                     comments: arrayUnion(comm),
+                    description: arrayUnion(desc),
                     mood: arrayUnion(getMood(slide))
                 })
             } else{
@@ -415,6 +417,7 @@ function report({navigation, route}) {
                     values: arrayUnion(acwrNew),
                     dates: arrayUnion(nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()),
                     comments: arrayUnion(comm),
+                    description: arrayUnion(desc),
                     mood: arrayUnion(getMood(slide))
                 })
             }
