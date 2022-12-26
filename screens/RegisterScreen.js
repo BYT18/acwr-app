@@ -59,6 +59,10 @@ const RegisterScreen = ({navigation}) =>{
           status: 'Active',
           email: email.toLowerCase()
         })
+
+        setDoc(doc(db, "users",  email.toLowerCase(), 'data', 'acwr'), {
+          dates: []
+        })
        
         
         //updateDoc(doc(db, "teams", team), {
