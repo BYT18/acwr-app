@@ -107,14 +107,26 @@ function Home({navigation, route}) {
   const [status, setStatus] = useState(null);
   const [carInd, setCarInd] = useState(0);
 
+  // const getGoals = async() => {
+  //   if (global.data.goals.length > 0){
+  //     for (let i = 0; i < 3; i++) {
+  //       const tempGo = global.data.goals[Math.floor(Math.random() * global.data.goals.length)]
+  //       while (tempGo == null){
+  //         tempGo = global.data.goals[Math.floor(Math.random() * global.data.goals.length)]
+  //       }
+  //       goals.push({key:(global.data.date[Math.floor(Math.random() * global.data.goals.length)]), goaltext:tempGo})
+  //     }
+  //   }
+  // };
+
   const getGoals = async() => {
-    if (global.data.goals.length > 0 && goals.length < 3){
+    if (global.data.goals.length > 0){
       for (let i = 0; i < 3; i++) {
-        const tempGo = global.data.goals[Math.floor(Math.random() * global.data.goals.length)]
+        const tempGo = global.data.goals[i]
         while (tempGo == null){
-          tempGo = global.data.goals[Math.floor(Math.random() * global.data.goals.length)]
+          tempGo = global.data.goals[i]
         }
-        goals.push({key:(global.data.date[Math.floor(Math.random() * global.data.goals.length)]), goaltext:tempGo})
+        goals.push({key:(global.data.date[i]), goaltext:tempGo})
       }
     }
   };

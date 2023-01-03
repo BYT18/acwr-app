@@ -122,15 +122,15 @@ function CoachHome({navigation, route}) {
     // console.log(startdate, enddate)
     filterDatabyDate()
     // console.log(filteredindices)
-    console.log(filtereddates)
-    console.log(graphLabels)
-    console.log(filteredacwr)
-  }, [isFocused, graphData, filteredacwr, graphLabels, startdate, enddate]);
+    // console.log(filtereddates)
+    // console.log(graphLabels)
+    // console.log(filteredacwr)
+  }, [isFocused, graphData, filteredacwr, graphLabels, startdate, enddate, arrayofdates]);
 
     const getLab = async(email) => {
         const docRef = doc(db, "users", email, 'data', 'acwr');
         const docSnap = await getDoc(docRef);
-        console.log(docSnap.data().dates + 'datasss')
+        // console.log(docSnap.data().dates + 'datasss')
         graphLabels = chartLabels(docSnap.data().dates)
         return docSnap.data().dates
     }
@@ -143,7 +143,7 @@ function CoachHome({navigation, route}) {
         // console.log(datedata)
         datedescriptions = docSnap.data().description
         datecomments = docSnap.data().comments
-        console.log(datecomments)
+        // console.log(datecomments)
         setIsLoading(false)
         return docSnap.data().values
     }
@@ -252,6 +252,7 @@ function CoachHome({navigation, route}) {
       for(var x=0, len=sortedindices.length; x < len; x++){
         indices.push(sortedindices[x][0])
         filtereddates.push(sortedindices[x][1])
+        console.log(sortedindices)
     }
     getGraphDatabyIndex()
     }
@@ -262,11 +263,11 @@ function CoachHome({navigation, route}) {
     } 
     }
 
-
+    // filterDatabyDate()
 
     const fetchAthleteChange = (item) => {
         resetDotData() //this function resets the dot datas
-        // resetOnChange() //this function resets the filter array
+        resetOnChange() //this function resets the filter array
         filterDatabyDate()
         setAthleteName(item.name)
         setValue(item.value);
@@ -532,7 +533,7 @@ function CoachHome({navigation, route}) {
 
 async function openLink() {
   const querySnapshot = await getDoc(doc(db, "teams", thisUser.team));
-  console.log("Document data:", querySnapshot.data().workout);
+  // console.log("Document data:", querySnapshot.data().workout);
   WebBrowser.openBrowserAsync(querySnapshot.data().workout)
 }
   

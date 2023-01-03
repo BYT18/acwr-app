@@ -146,17 +146,7 @@ export default class Calendar extends Component {
       </View>
     );
     const EditButton = ({showButton}) => (
-      /*<View style={styles.editButton}>
-        {showButton && 
-          <TouchableOpacity onPress={() => 
-            navigation.navigate('Report', {date: startDate})
-          }>
-              <MaterialIcons name='edit' size={35} color="white">
-              </MaterialIcons>
-          </TouchableOpacity>
-        }
-      </View>*/
-      <View style = {{flex:1}}>
+      <View>
         {showButton && 
           <TouchableOpacity style = {styles.button} onPress = {() => navigation.navigate('Report', {date: startDate})}>
           <Text style = {styles.buttontext}>
@@ -166,6 +156,7 @@ export default class Calendar extends Component {
         }
       </View>
     )
+
     const displayButton = false
 
     const renderItem = ({ item }) => (
@@ -185,7 +176,7 @@ export default class Calendar extends Component {
           // scrollable={true}
         />
         <ScrollView style={styles.dateInfoBox}>
-          <View styles={[{ flexDirection: 'row'}]}>
+          <View style={styles.dateboxedit}>
             {/* <TouchableOpacity onPress = {() => this.setModalVisible(!modalVisible)}> */}
               <Text style={styles.datetext}>{ this.displayDate(startDate) }</Text>
               <EditButton showButton={this.isInThePast(startDate)} />
@@ -379,14 +370,19 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: 'white',
     borderWidth: 2,
-    padding: 13,
-    marginHorizontal: 25,
+    padding: 9,
 },
 buttontext: {
     color: "black",
     textAlign: "center",
     fontWeight: "700",
     fontSize: 16,
+},
+dateboxedit: {
+  flexDirection: 'row',
+  marginHorizontal: 26,
+  alignItems: 'center',
+  justifyContent: 'space-between',
 }
 });
 
