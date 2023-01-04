@@ -112,20 +112,20 @@ function CoachHome({navigation, route}) {
   
   const isFocused = useIsFocused()
   useEffect(() => {
-    //getLab(athletes[2].email)
-    // getDat(athletes[2].email)acw
     graphData = graphData
     graphLabels = graphLabels
     global.data = global.data
     arrayofdates = getDatesBetween(startdate, enddate)
-    // console.log(arrayofdates)
-    // console.log(startdate, enddate)
     filterDatabyDate()
-    // console.log(filteredindices)
     console.log(filtereddates)
     console.log(graphLabels)
     console.log(filteredacwr)
-  }, [isFocused, graphData, filteredacwr, graphLabels, startdate, enddate]);
+  }, [
+    //isFocused, 
+    graphData, 
+    filteredacwr,
+    graphLabels, startdate, enddate
+    ]);
 
     const getLab = async(email) => {
         const docRef = doc(db, "users", email, 'data', 'acwr');
