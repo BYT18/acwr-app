@@ -175,23 +175,30 @@ function Home({navigation, route}) {
             ]
 
     const chartLabels = () => {
+      const dateCopy = [...global.data.date]
         if ( global.data.date.length < 7){
-            const days = global.data.date
+          console.log(dateCopy + 'qee')
+            //const days = global.data.date
+            const days = dateCopy
             const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
             for (let i = 0; i < global.data.date.length; i++) {
+              console.log(weekday[new Date(days[i]).getDay()] + 'googoo')
                 days[i] = weekday[new Date(days[i]).getDay()]
             }
             return days
         }else{
-            const days = global.data.date.slice(-7)
+            //const days = global.data.date.slice(-7)
+            const days = dateCopy.slice(-7)
             const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
             for (let i = 0; i < 7; i++) {
                 days[i] = weekday[new Date(days[i]).getDay()]
+                console.log(weekday[new Date(days[i]).getDay()] + 'doodoo')
             }
             return days
         }
     }
 
+    
     const allTimeLabels = (length) => {
       const dates = []
       for (let i = 0; i < length - 1; i++) {

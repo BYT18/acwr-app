@@ -117,7 +117,6 @@ function CoachHome({navigation, route}) {
     global.data = global.data
     arrayofdates = getDatesBetween(startdate, enddate)
     filterDatabyDate()
-<<<<<<< HEAD
     console.log(filtereddates)
     console.log(graphLabels)
     console.log(filteredacwr)
@@ -127,13 +126,7 @@ function CoachHome({navigation, route}) {
     filteredacwr,
     graphLabels, startdate, enddate
     ]);
-=======
-    // console.log(filteredindices)
-    // console.log(filtereddates)
-    // console.log(graphLabels)
-    // console.log(filteredacwr)
-  }, [isFocused, graphData, filteredacwr, graphLabels, startdate, enddate, arrayofdates]);
->>>>>>> f633022fbd5e2a42e4261accb4d5df67393f9898
+
 
     const getLab = async(email) => {
         const docRef = doc(db, "users", email, 'data', 'acwr');
