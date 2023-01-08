@@ -566,8 +566,8 @@ function report({navigation, route}) {
                                     maximumValue={2}
                                     step = {1}
                                     value = {moodSlideVar}
-                                    minimumTrackTintColor="dodgerblue"
-                                    maximumTrackTintColor="red"
+                                    minimumTrackTintColor="red"
+                                    maximumTrackTintColor="dodgerblue"
                                     onValueChange={onMoodSlide}
                                     tapToSeek
                                     //thumbTintColor = 'dodgerblue'
