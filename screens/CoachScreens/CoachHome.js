@@ -121,7 +121,7 @@ function CoachHome({navigation, route}) {
     console.log(graphLabels)
     console.log(filteredacwr)
   }, [
-    //isFocused, 
+    // isFocused, 
     graphData, 
     filteredacwr,
     graphLabels, startdate, enddate

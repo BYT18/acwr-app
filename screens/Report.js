@@ -679,8 +679,8 @@ function report({navigation, route}) {
         
          
             <ScrollView style={[{paddingHorizontal: 12, flex:1}]}>
-        <View style={[{flex:1, flexDirection:'collumn'}]}>
-        <Text style = {[styles.titleText]}>
+        {/* <View style={[{flex:1, flexDirection:'collumn'}]}> */}
+        {/* <Text style = {[styles.titleText]}>
                                         Injuries
                                     </Text>
           <View style={[{flex:1, paddingTop: 16, paddingBottom: 8}]}>
@@ -717,8 +717,8 @@ function report({navigation, route}) {
             />
           </View>
           
-        </View>
-        <Text style={{alignSelf:'center', paddingTop:25, paddingBottom:10}}>Severity: {injurySlide}</Text>
+        </View> */}
+        {/* <Text style={{alignSelf:'center', paddingTop:25, paddingBottom:10}}>Severity: {injurySlide}</Text>
         <Slider
           style={{width: 300, alignSelf:'center'}}
           minimumValue={0.5}
@@ -735,8 +735,8 @@ function report({navigation, route}) {
             <TouchableOpacity onPress={() => updateInj()} activeOpacity={0.7} style={[styles.saveButton,{backgroundColor: value == null ? 'grey' : 'black'}]} disabled={value == null ? true : false}>
               <Text style={{color:'white', alignSelf:'center', fontSize:16, fontWeight:'700'}}> Add Injury </Text>
             </TouchableOpacity>
-          </View>
-        <FlatList
+          </View> */}
+        {/* <FlatList
           data={injuries}
           width='100%'
           extraData={refresh}
@@ -759,7 +759,7 @@ function report({navigation, route}) {
                     <Text style = {[styles.buttonText]}>
                         Remove Injury <Ionicons name="enter-outline" size={20} color="black" />
                     </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity
                     style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7, marginTop:10}]}
                         //onPress={() => {
