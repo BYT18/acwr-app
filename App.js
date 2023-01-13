@@ -73,7 +73,7 @@ const App = ({navigation}) => {
           //options={{ 
           options={({ navigation }) => ({
             gestureEnabled: false,
-            headerShown: false,
+            //headerShown: false,
             headerStyle: {
               //backgroundColor: '#f4511e',
             },

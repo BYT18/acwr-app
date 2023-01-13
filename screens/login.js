@@ -11,12 +11,27 @@ import {Input, Button} from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //import { getAuth, onAuthStateChanged, signInWithEmailAndPassword  } from "firebase/auth";
 //import { auth } from './Firebase';
-import { auth, db} from "./Firebase";
-import { signInWithEmailAndPassword, onAuthStateChanged, getAdditionalUserInfo } from "firebase/auth";
+import {auth, db} from "./Firebase";
+import { signInWithEmailAndPassword, onAuthStateChanged, getAdditionalUserInfo,  getAuth} from "firebase/auth";
 import { collection, addDoc, query, where, getDocs, deleteDoc, doc, setDoc, getDoc, updateDoc} from "firebase/firestore"; 
 import {Video} from 'expo-av'
 import * as BackgroundFetch from "expo-background-fetch"
 import * as TaskManager from "expo-task-manager"
+
+nowDate = new Date()
+/*global.data = {
+  date: [nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()],
+  fullDate: [nowDate],
+  time: [0],
+  percieved: [0],
+  acute: [0],
+  chronic: [0],
+  acwr: [0],
+  desc: [0],
+  com: [0],
+  goals: [0],
+  notifications:true
+}*/
 
 global.data = {
   date: [],
@@ -32,6 +47,17 @@ global.data = {
   notifications:true
 }
 
+const signOut = () => {
+  //navigation.navigate('Login')
+  getAuth().signOut().then(function() {
+      navigation.navigate('Login')
+    // Sign-out successful.
+  }, function(error) {
+    // An error happened.
+  });
+}
+//signOut()
+
 const storeData = async (value) => {
   try {
     const jsonValue = JSON.stringify(value)
@@ -42,6 +68,8 @@ const storeData = async (value) => {
     // saving error
   }
 }
+
+//storeData(global.data)
 
 function myTask() {
   try {

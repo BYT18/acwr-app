@@ -130,13 +130,15 @@ function report({navigation, route}) {
     };
 
     const showDate = () =>{
-        if (route.params == null){
+        if (isNaN(route.params)){
             const day = new Date()
             return day.getFullYear()+'/'+(day.getMonth()+1)+'/'+day.getDate()
+        } else{
+            console.log(route.params)
+            const day  = route.params.date;
+            console.log(day)
         }
-        console.log(route.params)
-        const day  = route.params.date;
-        console.log(day)
+
         
         return day
     }
@@ -295,6 +297,7 @@ function report({navigation, route}) {
         if (route.params != null){
             nowDate = new Date(route.params.date)
         }
+        console.log('this is the date:' +  nowDate)
         //new Date(2022, 7, 2, 0, 0, 0, 0);
         const pastDate = new Date(global.data.fullDate[global.data.fullDate.length - 1])
         const Difference_In_Time = nowDate.getTime() - pastDate.getTime();
