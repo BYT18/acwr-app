@@ -254,7 +254,7 @@ function report({navigation, route}) {
             //global.data.com = JSON.parse(jsonValue).com
             //global.data.goals = JSON.parse(jsonValue).goals
             onChangeACWR(Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100)
-            console.log(global.data)
+            //console.log(global.data)
             //updateDaily()
             //updateData()
             //storeData({time: [], acute:[], chronic :[], date:[], percieved: [], acwr:[]})
@@ -297,14 +297,13 @@ function report({navigation, route}) {
         if (route.params != null){
             nowDate = new Date(route.params.date)
         }
-        console.log('this is the date:' +  nowDate)
+        console.log('this is the date:' +  global.data.fullDate[global.data.fullDate.length - 1])
         //new Date(2022, 7, 2, 0, 0, 0, 0);
         const pastDate = new Date(global.data.fullDate[global.data.fullDate.length - 1])
         const Difference_In_Time = nowDate.getTime() - pastDate.getTime();
         const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         console.log(Difference_In_Days)
-
-        if (Math.round(Difference_In_Days) > 1) {
+        if (Math.round(Difference_In_Days) > 1 && global.data.fullDate[global.data.fullDate.length - 1] != null) {
             console.log('differnce in days' + Difference_In_Days)
             for (let i = 0; i < Difference_In_Days - 1; i++) {
                 acuteNew = (0 * 0.25) + (0.75 * acutePast) 
