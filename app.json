@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "acwr-app",
+    "slug": "acwr-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "plugins": [
+      "@react-native-firebase/app",
+      [
+       "expo-build-properties",
+        {
+         "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ],
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "fetch"
+        ]
+      },
+      "bundleIdentifier": "com.btang.acwrapp",
+      "buildNumber": "1.5.0"
+    },
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.btang.acwrapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
