@@ -197,11 +197,11 @@ function report({navigation, route}) {
     useEffect(() => {
           const nowDate = new Date()
           nowDate.setHours(0, 0, 0, 0)
-          setDoc(doc(db, "users", thisUser.email, 'injury', nowDate.toString()), {
+          setDoc(doc(db, "users", thisUser.email.toLowerCase(), 'injury', nowDate.toString()), {
             data: injuries
           })
     
-          setDoc(doc(db, "users", thisUser.email, 'stress', nowDate.toString()), {
+          setDoc(doc(db, "users", thisUser.email.toLowerCase(), 'stress', nowDate.toString()), {
             data: stresses
           })
         

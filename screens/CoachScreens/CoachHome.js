@@ -40,6 +40,11 @@ var filteredacwr = [];
 var filtereddates = [];
 var filteredcomments = [];
 var filtereddescriptions = [];
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
+
+
 
 var startDate = null
 const SLIDER_WIDTH = Dimensions.get('window').width + 80
@@ -47,11 +52,19 @@ const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.75)
 
 function CoachHome({navigation, route}) {
     //console.log(athletes[2].email)
+    const [refreshing, setRefreshing] = React.useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      wait(2000).then(() => setRefreshing(false));
+    }, []);
+
   const [carInd, setCarInd] = useState(0);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [clickedPerson, setClickedPerson] = React.useState('');
-  const [isLoading, setIsLoading] = useState(true);
+ // const [isLoading, setIsLoading] = useState(true);
   
   const [open, setOpen] = useState(false)
   const [dotSelected, setDotSelected] = useState();
@@ -353,7 +366,14 @@ function CoachHome({navigation, route}) {
   
     return (
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              />
+          }          
+          >
           <View style={styles.container}>
         
       </View>
