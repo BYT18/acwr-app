@@ -18,8 +18,8 @@ import {Video} from 'expo-av'
 import * as BackgroundFetch from "expo-background-fetch"
 import * as TaskManager from "expo-task-manager"
 
-nowDate = new Date()
-/*global.data = {
+/*nowDate = new Date()
+global.data = {
   date: [nowDate.getFullYear()+'/'+(nowDate.getMonth()+1)+'/'+nowDate.getDate()],
   fullDate: [nowDate],
   time: [0],

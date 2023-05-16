@@ -17,13 +17,10 @@ import { getAuth } from "firebase/auth";
 import * as WebBrowser from 'expo-web-browser';
 import { Dropdown } from 'react-native-element-dropdown';
 import { MaterialIcons, AntDesign } from '@expo/vector-icons';
-
 import { thisUser } from '../homeNav';
 import { athletes, athList } from './CoachHomeNav';
 import ACWREntry from '../../components/ACWREntry';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-
 
 var goals = [];
 var graphLabels = []
@@ -44,8 +41,6 @@ const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-
-
 var startDate = null
 const SLIDER_WIDTH = Dimensions.get('window').width + 80
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.75)
@@ -60,12 +55,15 @@ function CoachHome({navigation, route}) {
       wait(2000).then(() => setRefreshing(false));
     }, []);
 
+  //const [graphLabels, setLabels] = useState([]);
+  const [gData, setData] = useState([]);
   const [carInd, setCarInd] = useState(0);
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [clickedPerson, setClickedPerson] = React.useState('');
  // const [isLoading, setIsLoading] = useState(true);
   
+
   const [open, setOpen] = useState(false)
   const [dotSelected, setDotSelected] = useState();
   const [date, setDate] = useState();
@@ -81,6 +79,7 @@ function CoachHome({navigation, route}) {
   const resetOnChange = () => {
     filteredindices=[]
     filteredacwr=[]
+    setData([])
     filteredcomments=[]
     filtereddates=[]
     sortedindices=[]
@@ -125,15 +124,19 @@ function CoachHome({navigation, route}) {
   
   const isFocused = useIsFocused()
   useEffect(() => {
-    //getLab(athletes[2].email)
-    // getDat(athletes[2].email)acw
-    graphData = graphData
-    graphLabels = graphLabels
+    //graphLabels = getLab(athletes[2].email)
+    //graphData = getDat(athletes[2].email)
+    //fetchAthleteChange()
+    //graphData = graphData
+    //graphLabels = graphLabels
     global.data = global.data
     arrayofdates = getDatesBetween(startdate, enddate)
+    
     // console.log(arrayofdates)
     // console.log(startdate, enddate)
-    filterDatabyDate()
+    
+    //filterDatabyDate()
+    
     // console.log(filteredindices)
     // console.log(filtereddates)
     // console.log(graphLabels)
@@ -157,6 +160,12 @@ function CoachHome({navigation, route}) {
         datedescriptions = docSnap.data().description
         datecomments = docSnap.data().comments
         // console.log(datecomments)
+        resetDotData() //this function resets the dot datas
+        resetOnChange() //this function resets the filter array
+        filterDatabyDate()
+        //setAthleteName(item.name)
+        //setValue(item.value);
+        setIsFocus(false);
         setIsLoading(false)
         return docSnap.data().values
     }
@@ -273,12 +282,15 @@ function CoachHome({navigation, route}) {
     const getGraphDatabyIndex = () => {
       for(var x=0, len=indices.length; x < len; x++){
         filteredacwr.push(graphData[indices[x]])
+        //gData.push(graphData[indices[x]])
     } 
     }
 
     // filterDatabyDate()
 
     const fetchAthleteChange = (item) => {
+      //async function fetchAthleteChange(item){
+        //setIsLoading(true)
         resetDotData() //this function resets the dot datas
         resetOnChange() //this function resets the filter array
         filterDatabyDate()
@@ -286,10 +298,11 @@ function CoachHome({navigation, route}) {
         setValue(item.value);
         setIsFocus(false);
         getLab(item.email)
-        getDat(item.email)
-        graphData = []
-        graphLabels = []
-        setIsLoading(true)
+        //getDat(item.email)
+        //graphData = getDat(item.email)
+        //graphLabels = getLab(item.email)
+        //getGraphDatabyIndex()
+        setIsLoading(false)
     }
 
     // const fetchACWR = (index) => {
@@ -431,13 +444,16 @@ function CoachHome({navigation, route}) {
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
-                          resetOnChange()
-                            fetchAthleteChange(item)
+                            setIsLoading(true)
+                            resetOnChange()
+                            //fetchAthleteChange(item)
                             // console.log(item.email)
                             // setValue(item.value);
-                            // setIsFocus(false);
-                            // getLab(item.email)
-                            // getDat(item.email)
+                            //setIsFocus(false);
+                            //graphLabels = getLab(item.email)
+                            graphData = getDat(item.email)
+                            //setData(getDat(item.email))
+                            //setIsLoading(false)
                         }}
                         renderLeftIcon={() => (
                             <MaterialIcons
@@ -458,6 +474,7 @@ function CoachHome({navigation, route}) {
                     <View style={styles.modalView}>
                         <Text style={styles.subheadingText}>{clickedPerson}</Text>
                         {!isLoading && filteredacwr?.length > 0? (
+                          /*{/*!isLoading ? ( */
                         <View>
                             <Text style={[styles.subheading, {textAlign: 'center'}]}>{athleteName}</Text>
                             <LineChart
@@ -468,6 +485,7 @@ function CoachHome({navigation, route}) {
                         datasets: [
                             {
                             data: filteredacwr
+                            //data: graphData
                           
                             }
                         ]

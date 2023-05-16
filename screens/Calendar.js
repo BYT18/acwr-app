@@ -93,7 +93,7 @@ export default class Calendar extends Component {
     }
 
     nowDate.setHours(0, 0, 0, 0)
-    console.log(nowDate+'trolldate')
+    //console.log(nowDate+'trolldate')
     this.getInj(nowDate)
   }
 

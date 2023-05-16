@@ -57,6 +57,7 @@ const App = ({navigation}) => {
     }
   }
   getData()
+  //signOut()
 
 
   return (

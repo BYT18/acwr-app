@@ -107,31 +107,31 @@ function Home({navigation, route}) {
   const [status, setStatus] = useState(null);
   const [carInd, setCarInd] = useState(0);
 
-  // const getGoals = async() => {
-  //   if (global.data.goals.length > 0){
-  //     for (let i = 0; i < 3; i++) {
-  //       const tempGo = global.data.goals[Math.floor(Math.random() * global.data.goals.length)]
-  //       while (tempGo == null){
-  //         tempGo = global.data.goals[Math.floor(Math.random() * global.data.goals.length)]
-  //       }
-  //       goals.push({key:(global.data.date[Math.floor(Math.random() * global.data.goals.length)]), goaltext:tempGo})
-  //     }
-  //   }
-  // };
+   const getGoals = async() => {
+     if (global.data.goals.length > 0){
+       for (let i = 0; i < 3; i++) {
+         const tempGo = global.data.goals[Math.floor(Math.random() * global.data.goals.length)]
+         while (tempGo == null){
+           tempGo = global.data.goals[Math.floor(Math.random() * global.data.goals.length)]
+         }
+         goals.push({key:(global.data.date[Math.floor(Math.random() * global.data.goals.length)]), goaltext:tempGo})
+       }
+     }
+   };
 
-  const getGoals = async() => {
+  /*const getGoals = async() => {
     if (global.data.goals.length > 0){
       for (let i = 0; i < 3; i++) {
         const tempGo = global.data.goals[i]
-        while (tempGo == null){
-          tempGo = global.data.goals[i]
-        }
+        //while (tempGo == null){
+        //  tempGo = global.data.goals[i]
+        //}
         goals.push({key:(global.data.date[i]), goaltext:tempGo})
       }
     }
-  };
+  };*/
 
-  getGoals()
+  //getGoals()
 
   // const getAthleteName = () => {
   //   const docSnap = getDoc(doc(db, "users", thisUser.email))
@@ -192,7 +192,7 @@ function Home({navigation, route}) {
         }
     }
 
-    const allTimeLabels = (length) => {
+  const allTimeLabels = (length) => {
       const dates = []
       for (let i = 0; i < length - 1; i++) {
         dates[i] = ''
@@ -277,7 +277,7 @@ function Home({navigation, route}) {
             borderRadius: 10
           }}
         />
-      </View>
+        </View>
       )
     }
     const isCarousel = React.useRef(null)
@@ -310,7 +310,7 @@ function Home({navigation, route}) {
                 </View>
                             <Text style={[styles.roundbuttontext1, {color: pickCol(Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100)}]}>
                                 {Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100}
-                            </Text>
+          </Text>
                     </View>
                            
                 <View style={{ justifyContent: 'center', alignSelf:'center'}}>
@@ -352,7 +352,7 @@ function Home({navigation, route}) {
                   }}
                   inactiveDotOpacity={0.4}
                   inactiveDotScale={1}
-                />    
+                />   
                 </View>
             </View>
             
@@ -362,10 +362,10 @@ function Home({navigation, route}) {
                   <Text style={styles.goalstext}>
                     Goals
                   </Text>
-                  {/* <FlatList 
+                  {/*<FlatList 
                             data={goals}
                             renderItem={({item}) => <Text style={styles.goalstexttwo}>{item.key}</Text>}
-                  /> */}
+                /> */}
                   <FlatList
                   style={styles.goallistcontainer}
                     data={goals}

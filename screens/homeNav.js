@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Home from "./home"
+//import Report from './Report';
 import Report from './Report';
 import share from './share'
 import History from './History';

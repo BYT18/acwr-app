@@ -100,6 +100,15 @@ function report({navigation, route}) {
     var durationSlideVar = 2
     var wheelVar = 0
 
+    const [desc, onChangeDesc] = React.useState(descVar);
+    const [comm, onChangeComm] = React.useState(commVar);
+    const [goal, onChangeGoal] = React.useState(goalVar);
+    const [slide, onSlide] = React.useState(slideVar);
+    const [durationSlide, ondurationSlide] = React.useState(durationSlideVar);
+    const [moodSlide, onMoodSlide] = React.useState(moodSlideVar);
+    const [time, onChangeTime] = React.useState(wheelVar);
+    const [displayACWR, onChangeACWR] = React.useState(Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100);
+
     var getDaysArray = function(end, start) {
         for(var arr=[],dt=new Date(start); dt<new Date(end); dt.setDate(dt.getDate()+1)){
             arr.push(new Date(dt));
@@ -130,16 +139,19 @@ function report({navigation, route}) {
     };
 
     const showDate = () =>{
-        if (isNaN(route.params)){
-            const day = new Date()
+        console.log(route.params+'gg')
+        //if (isNaN(route.params)){
+        day = NaN
+        //if (isNaN(new Date(route.params.date).getDay())){  
+        if (route.params == null){
+            day = new Date()
             return day.getFullYear()+'/'+(day.getMonth()+1)+'/'+day.getDate()
         } else{
-            console.log(route.params)
-            const day  = route.params.date;
-            console.log(day)
+            console.log(route.params+'huh')
+            day = route.params.date;
+            console.log(day+'ok')
         }
 
-        
         return day
     }
 
@@ -149,7 +161,18 @@ function report({navigation, route}) {
         } else {
 
         }*/
-        console.log(global.data.date.indexOf(showDate()))
+        /*console.log(new Date(route.params.date).getDay()+"gg")
+        //if (isNaN(route.params)){
+        if (isNaN(new Date(route.params.date).getDay())){    
+            console.log("if")
+            const day = new Date()
+            return day.getFullYear()+'/'+(day.getMonth()+1)+'/'+day.getDate()
+        } else{
+            console.log(route.params+'huh')
+            const day  = route.params.date;
+            console.log(day+'ok')
+        }*/
+        //console.log(global.data.date.indexOf(day))
         if (global.data.date.indexOf(showDate()) == -1){
             goalVar = ''
             commVar = ''
@@ -162,7 +185,9 @@ function report({navigation, route}) {
             commVar = global.data.com[global.data.date.indexOf(showDate())]
             descVar = global.data.desc[global.data.date.indexOf(showDate())]
             slideVar = global.data.percieved[global.data.date.indexOf(showDate())]
+            //onChangeACWR(slideVar)
             wheelVar = global.data.time[global.data.date.indexOf(showDate())]
+            //onChangeTime(wheelVar)
             //durationSlideVar = global.data.time[global.data.date.indexOf(showDate())]
             if (!selected) {
                 setSelected([min, global.data.time[global.data.date.indexOf(showDate())] / 60]);
@@ -171,15 +196,6 @@ function report({navigation, route}) {
         }
     }
     editData()
-
-    const [desc, onChangeDesc] = React.useState(descVar);
-    const [comm, onChangeComm] = React.useState(commVar);
-    const [goal, onChangeGoal] = React.useState(goalVar);
-    const [slide, onSlide] = React.useState(slideVar);
-    const [durationSlide, ondurationSlide] = React.useState(durationSlideVar);
-    const [moodSlide, onMoodSlide] = React.useState(moodSlideVar);
-    const [time, onChangeTime] = React.useState(wheelVar);
-    const [displayACWR, onChangeACWR] = React.useState(Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100);
     
     //console.log(time+'tim')
     //const [date, setDate] = useState(new Date())
