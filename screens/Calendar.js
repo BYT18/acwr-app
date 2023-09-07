@@ -165,7 +165,7 @@ export default class Calendar extends Component {
 
     return (
       <View style={styles.container}>
-                    <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 40, paddingBottom: 25}]}>Calendar</Text>
+                    {/* <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 40, paddingBottom: 25}]}>Calendar</Text> */}
         <CalendarPicker
           onDateChange={this.onDateChange}
           todayBackgroundColor = 'black'
@@ -262,7 +262,7 @@ export default class Calendar extends Component {
               </View>
           </View>
         </Modal> */}
-        <ACWREntry />
+        {/* <ACWREntry /> */}
       </View>
 
     );
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFFFF',
     flexDirection:'column',
-    paddingTop: 30,
+    paddingTop: 4,
   },
   modalView: {
     margin: 5,

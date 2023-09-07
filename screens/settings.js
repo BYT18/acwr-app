@@ -241,7 +241,7 @@ const settings = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-                            <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Settings</Text>
+                            {/* <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Settings</Text> */}
                             <ScrollView>
                 <View style={[{flex:3}]}>
                 
@@ -463,7 +463,7 @@ const settings = ({navigation}) => {
                     </View>
                 </View>
             </Modal>
-            <ACWREntry />
+            {/* <ACWREntry /> */}
         </SafeAreaView>
     );
 }

@@ -466,8 +466,6 @@ function report({navigation, route}) {
           }
     }
 
-    
-
     /*const updateDaily = () => {
         const len = data.daily.length
         if (len == 0 ) {
@@ -544,7 +542,7 @@ function report({navigation, route}) {
     return (
         <SafeAreaView style={[styles.container, {flexDirection: "column"}]}>
             {/*<DatePicker date={date} onDateChange={setDate} />*/} 
-            <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Report</Text>
+            {/* <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Report</Text> */}
 
             <ScrollView
     
@@ -575,22 +573,7 @@ function report({navigation, route}) {
                                     tapToSeek
                                     //thumbTintColor = 'dodgerblue'
                                 />
-                                <Text style = {[styles.text]}>
-                                    {"Mood | Fatigue | Stress: " + getMood(moodSlide)} 
-                                </Text>
-                                <Slider
-                                    style={{width: 280}}
-                                    minimumValue={0}
-                                    maximumValue={2}
-                                    step = {1}
-                                    value = {moodSlideVar}
-                                    minimumTrackTintColor="dodgerblue"
-                                    maximumTrackTintColor="red"
-                                    onValueChange={onMoodSlide}
-                                    tapToSeek
-                                    //thumbTintColor = 'dodgerblue'
-                                />
-                               <Text style = {[styles.text,{paddingBottom:15}]}>
+                               <Text style = {[styles.text,{marginBottom:7}]}>
                                     {"Duration:"} {durationSlide} hrs
                                 </Text>
                                 <Slider
@@ -605,6 +588,29 @@ function report({navigation, route}) {
                                     tapToSeek
                                     //thumbTintColor = 'dodgerblue'
                                 />
+                                 <Text style = {[styles.text]}>
+                                    {"Mood | Fatigue | Stress"} 
+                                </Text>
+                                <View style={[{flexDirection: 'row', flex: 1, marginBottom: 10}]}>
+                                    <TouchableOpacity style={[{backgroundColor: 'white', marginHorizontal: 20, marginVertical: 10, borderRadius: 4, padding: 10, shadowColor: "#000", shadowOffset: {width: 0, height: 2,}, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,}]} onPress={() => onMoodSlide(0)}><Text style={[{color: moodSlide == 0 ? 'green' : 'black',}]}>GOOD</Text></TouchableOpacity>
+                                    <TouchableOpacity style={[{backgroundColor: 'white', marginHorizontal: 20, marginVertical: 10, borderRadius: 4, padding: 10, shadowColor: "#000", shadowOffset: {width: 0, height: 2,}, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,}]} onPress={() => onMoodSlide(1)}><Text style={[{color: moodSlide == 1 ? 'blue' : 'black',}]}>NEUTRAL</Text></TouchableOpacity>
+                                    <TouchableOpacity style={[{backgroundColor: 'white', marginHorizontal: 20, marginVertical: 10, borderRadius: 4, padding: 10, shadowColor: "#000", shadowOffset: {width: 0, height: 2,}, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5,}]} onPress={() => onMoodSlide(2)}><Text style={[{color: moodSlide == 2 ? 'red' : 'black',}]}>BAD</Text></TouchableOpacity>
+                                </View>
+                                {/* <Text style = {[styles.text]}>
+                                    {"Mood | Fatigue | Stress: " + getMood(moodSlide)} 
+                                </Text> */}
+                                {/* <Slider
+                                    style={{width: 280}}
+                                    minimumValue={0}
+                                    maximumValue={2}
+                                    step = {1}
+                                    value = {moodSlideVar}
+                                    minimumTrackTintColor="dodgerblue"
+                                    maximumTrackTintColor="red"
+                                    onValueChange={onMoodSlide}
+                                    tapToSeek
+                                    //thumbTintColor = 'dodgerblue'
+                                /> */}
                                {/* <MultiSlider
                                     min={min}
                                     max={max}
@@ -800,7 +806,7 @@ function report({navigation, route}) {
                 </TouchableWithoutFeedback>
        
             </ScrollView>
-            <ACWREntry />
+            {/* <ACWREntry /> */}
         </SafeAreaView>
     );
 }

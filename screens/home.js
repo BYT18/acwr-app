@@ -65,6 +65,7 @@ var goals = []
 const SLIDER_WIDTH = Dimensions.get('window').width + 80
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.75)
 
+
 /*const TASK_NAME = "BACKGROUND_TASK"
 
 TaskManager.defineTask(TASK_NAME, () => {
@@ -298,7 +299,7 @@ function Home({navigation, route}) {
             {/* <View>
                     <Text style={styles.welcometext}>Welcome, {displayName} </Text>
             </View> */}
-                        <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>{thisUser.name}'s Lab</Text>
+                        {/* <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>{thisUser.name}'s Lab</Text> */}
 
           <ScrollView>
             <View style={{flex: 2, justifyContent:'space-between'}}>
@@ -390,7 +391,7 @@ function Home({navigation, route}) {
                 /> */}
             </View>
             </ScrollView>
-            <ACWREntry />
+            {/* <ACWREntry /> */}
         </SafeAreaView>
     );
 }
@@ -498,6 +499,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         paddingLeft: 10,
         paddingRight: 10,
+        paddingBottom: 20,
         textAlign: 'center',
     },
     goalstextbox: {
@@ -558,7 +560,8 @@ const styles = StyleSheet.create({
       fontSize: 15,
       fontWeight: "800",
       color: "#757575",
-      padding: 10,
+      paddingVertical: 5,
+      paddingHorizontal: 10,
       justifyContent: 'center',
       backgroundColor: "#f0f0f0",
       borderTopLeftRadius: 10,

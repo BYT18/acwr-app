@@ -191,7 +191,7 @@ const login = ({navigation}) =>{
               navigation.navigate('CoachHomeNav');
             }
             else{
-              navigation.navigate('LiNK',{acwr: Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100, name: thisUser.name});
+              navigation.navigate('Perception',{acwr: Math.round(global.data.acwr[global.data.acwr.length - 1] * 100) / 100, name: thisUser.name});
             }
                 }
       });

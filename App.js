@@ -19,6 +19,7 @@ import ReportTwo from './screens/BodyPage'
 import RegisterNav from './screens/RegisterNav'
 import CoachHomeNav from './screens/CoachScreens/CoachHomeNav'
 import CoachSettings from './screens/CoachScreens/CoachSettings';
+import ACWREntry from './components/ACWREntry';
 
 const Stack = createNativeStackNavigator();
 
@@ -69,7 +70,7 @@ const App = ({navigation}) => {
           options={{headerShown: false}}
       />
       <Stack.Screen 
-          name="LiNK" 
+          name="Perception" 
           component={homeNav} 
           //options={{ 
           options={({ navigation }) => ({
