@@ -66,6 +66,7 @@ function report({navigation, route}) {
       const [injuries, setInjuries] = useState([]);
       const [stresses, setStresses] = useState([]);
       const [refresh, setRefresh] = useState();
+      const [injBox, setInjBox] = useState();
 
 
       const renderLabel = (label, foc) => {
@@ -80,7 +81,8 @@ function report({navigation, route}) {
       };
     
       const updateInj = () => {
-        setInjuries(arr => [...arr, {part: value, sev: injurySlide}]) 
+        //setInjuries(arr => [...arr, {part: value, sev: injurySlide}]) 
+        setInjuries(arr => [...arr, {part: injBox, sev: injurySlide}]) 
         console.log('timelist' + injuries.length)
       }
   
@@ -710,7 +712,7 @@ function report({navigation, route}) {
           <View style={[{flex:1, paddingTop: 16, paddingBottom: 8}]}>
             
             {renderLabel('Select area', isFocus)}
-            <Dropdown
+            {/*<Dropdown
               style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
@@ -738,7 +740,14 @@ function report({navigation, route}) {
                   size={20}
                 />
               )}
-            />
+              />*/}
+              <TextInput
+                                        style={styles.input}
+                                        onChangeText={setInjBox}
+                                        value={injBox}
+                                        clearButtonMode={true}
+                                        //keyboardType='numeric'
+                                    />    
           </View>
           
         </View>
@@ -756,7 +765,9 @@ function report({navigation, route}) {
           //thumbTintColor = 'dodgerblue'
         />
         <View style={[{flex:1, marginVertical:10, paddingLeft:5, paddingTop: 16, marginHorizontal: 20}]}>
-            <TouchableOpacity onPress={() => updateInj()} activeOpacity={0.7} style={[styles.saveButton,{backgroundColor: value == null ? 'grey' : 'black'}]} disabled={value == null ? true : false}>
+            <TouchableOpacity onPress={() => updateInj()} activeOpacity={0.7} style={[styles.saveButton,{backgroundColor: value == null ? 'grey' : 'black'}]} 
+            //</View>disabled={value == null ? true : false}
+            >
               <Text style={{color:'white', alignSelf:'center', fontSize:16, fontWeight:'700'}}> Add Injury </Text>
             </TouchableOpacity>
           </View>
@@ -781,7 +792,7 @@ function report({navigation, route}) {
                     }
                 >
                     <Text style = {[styles.buttonText]}>
-                        Remove Injury <Ionicons name="enter-outline" size={20} color="black" />
+                        Remove Injury
                     </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -799,7 +810,6 @@ function report({navigation, route}) {
                     </Text>
                 </TouchableOpacity>        
       </ScrollView>
-    
                          </View>
                         </View>
                     </View>

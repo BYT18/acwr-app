@@ -155,7 +155,7 @@ function homeNav() {
         listeners={({navigation}) => ({blur: () => navigation.setParams({screen: undefined})})}
       />
 
-  <Stack.Screen 
+     <Stack.Screen 
         name="Report" 
         component={Report} 
         options={{

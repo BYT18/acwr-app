@@ -109,7 +109,7 @@ function Home({navigation, route}) {
   const [carInd, setCarInd] = useState(0);
 
    const getGoals = async() => {
-     if (global.data.goals.length > 0){
+     if (global.data.goals.length > 2){
        for (let i = 0; i < 3; i++) {
          const tempGo = global.data.goals[Math.floor(Math.random() * global.data.goals.length)]
          while (tempGo == null){
@@ -117,6 +117,8 @@ function Home({navigation, route}) {
          }
          goals.push({key:(global.data.date[Math.floor(Math.random() * global.data.goals.length)]), goaltext:tempGo})
        }
+     }else{
+      goals.push({key:"Add more goals", goaltext:"Keep working!"})
      }
    };
 
