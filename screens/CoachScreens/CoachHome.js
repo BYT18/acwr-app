@@ -37,6 +37,9 @@ var filteredacwr = [];
 var filtereddates = [];
 var filteredcomments = [];
 var filtereddescriptions = [];
+var defaultMode = true
+var emailAth = ""
+
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
@@ -85,6 +88,21 @@ function CoachHome({navigation, route}) {
     sortedindices=[]
     indices=[]
   }
+
+  const toggleMode = () => {
+    setIsLoading(true)
+    resetDotData() 
+    graphData = getDat(emailAth)
+    if (defaultMode) {
+      setstartDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 30))
+      defaultMode = false;
+    } else {
+      setstartDate(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7))
+      defaultMode = true
+    }
+
+}
+
 
   const onStartChange = (event, selectedDate) => {
     resetOnChange()
@@ -395,7 +413,7 @@ function CoachHome({navigation, route}) {
            
                 <Text style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30}]}>Athlete Data</Text>
                 <View style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30, flex: 1, flex: 'row', }]}>
-                <Text style={[{fontWeight: "600", fontSize: 18, paddingHorizontal: 10}]}>From</Text>
+                {/*<Text style={[{fontWeight: "600", fontSize: 18, paddingHorizontal: 10}]}>From</Text>
                 <View>
                             <DateTimePicker
                               testID="dateTimePicker"
@@ -403,7 +421,7 @@ function CoachHome({navigation, route}) {
                               mode={"date"}
                               onChange={onStartChange}
                             />
-                        </View>
+        </View>
                 </View>
 
                 <View style={[{fontWeight: "700", fontSize: 28, paddingHorizontal: 20, paddingTop: 30, flex: 1, flex: 'row', }]}>
@@ -415,7 +433,7 @@ function CoachHome({navigation, route}) {
                               mode={"date"}
                               onChange={onEndChange}
                             />
-                        </View>
+                        </View>*/}
                 </View>
            
 
@@ -451,6 +469,7 @@ function CoachHome({navigation, route}) {
                             // setValue(item.value);
                             //setIsFocus(false);
                             //graphLabels = getLab(item.email)
+                            emailAth = item.email
                             graphData = getDat(item.email)
                             //setData(getDat(item.email))
                             //setIsLoading(false)
@@ -530,6 +549,9 @@ function CoachHome({navigation, route}) {
                         </TouchableOpacity> */}
 
                 <Text style={styles.finetext}>Select data point to view more information.</Text>
+                <TouchableOpacity onPress={toggleMode} style = {[{paddingTop: 10, alignItems:'center', borderWidth: 1}]}>
+                    <Text>Toggle Mode</Text>
+                </TouchableOpacity>
 <ScrollView style={styles.dateInfoBox}>
                     <View style={styles.infobox}>
                     <Text style={styles.datetext}>Date</Text><Text style={styles.datetext}>{date}</Text>
