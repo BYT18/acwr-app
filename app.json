@@ -3,6 +3,7 @@
     "name": "acwr-app",
     "slug": "acwr-app",
     "version": "1.0.0",
+    "jsEngine": "hermes",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -14,16 +15,18 @@
     "plugins": [
       "@react-native-firebase/app",
       [
-       "expo-build-properties",
+        "expo-build-properties",
         {
-         "ios": {
-            "useFrameworks": "static"
+          "ios": {
+            "useFrameworks": "static",
+            "jsEngine": "hermes"
           }
         }
       ]
     ],
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/6bdf914d-361a-4469-b7cd-c9de1347e5f8"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -49,6 +52,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6bdf914d-361a-4469-b7cd-c9de1347e5f8"
+      }
+    },
+    "runtimeVersion": "1.0.0"
   }
 }

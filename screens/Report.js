@@ -709,7 +709,7 @@ function report({navigation, route}) {
         <Text style = {[styles.titleText]}>
                                         Injuries
                                     </Text>
-          <View style={[{flex:1, paddingTop: 16, paddingBottom: 8}]}>
+          <View style={[{flex:1}]}>
             
             {renderLabel('Select area', isFocus)}
             {/*<Dropdown
@@ -764,13 +764,7 @@ function report({navigation, route}) {
           tapToSeek
           //thumbTintColor = 'dodgerblue'
         />
-        <View style={[{flex:1, marginVertical:10, paddingLeft:5, paddingTop: 16, marginHorizontal: 20}]}>
-            <TouchableOpacity onPress={() => updateInj()} activeOpacity={0.7} style={[styles.saveButton,{backgroundColor: value == null ? 'grey' : 'black'}]} 
-            //</View>disabled={value == null ? true : false}
-            >
-              <Text style={{color:'white', alignSelf:'center', fontSize:16, fontWeight:'700'}}> Add Injury </Text>
-            </TouchableOpacity>
-          </View>
+
         <FlatList
           data={injuries}
           width='100%'
@@ -779,22 +773,55 @@ function report({navigation, route}) {
           // ItemSeparatorComponent={FlatListItemSeparator}
           renderItem={({ item }) => <InjuryReportComponent part={item.part} sev={item.sev} />}
         />
-        <TouchableOpacity
-                    style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, padding: 10}]}
-                        //onPress={() => {
-                        //    setModalVisible(true)     
-                        //    }}
-                    //onPress = {submit}
-                    onPress = {
+        <View style={[{flexDirection: 'row', flex: 1, justifyContent: 'center', alignSelf:'center'}]}>
+            <TouchableOpacity onPress={() => updateInj()} activeOpacity={0.7} style={[{ 
+        backgroundColor: '#000',
+        justifyContent: 'center',
+        //marginRight: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        borderRadius: 10,
+        height: 45,
+        paddingHorizontal: 10,
+        marginHorizontal: 10,
+        marginVertical: 10,},{backgroundColor: injBox == null ? 'grey' : 'black'}]} 
+            //</View>disabled={value == null ? true : false}
+            >
+              <Text style={{color:'white', alignSelf:'center', fontSize:16, fontWeight:'700'}}> Add Injury </Text>
+            </TouchableOpacity>
+            <TouchableOpacity  onPress = {
                         () => {injuries.pop()
                         setInjuries(injuries)
                     setRefresh(!refresh)}
-                    }
-                >
-                    <Text style = {[styles.buttonText]}>
-                        Remove Injury
-                    </Text>
-        </TouchableOpacity>
+                    } activeOpacity={0.7} style={[{
+                        backgroundColor: '#000',
+                        justifyContent: 'center',
+                        //marginRight: 20,
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 2,
+                        },
+                        shadowOpacity: 0.25,
+                        shadowRadius: 3.84,
+                        elevation: 5,
+                        borderRadius: 10,
+                        height: 45,
+                        marginHorizontal: 10,
+                        paddingHorizontal: 10,
+                        marginVertical: 10,
+                    }]} 
+            //</View>disabled={value == null ? true : false}
+            >
+              <Text style={{color:'white', alignSelf:'center', fontSize:16, fontWeight:'700'}}> Remove Injury </Text>
+            </TouchableOpacity>
+        </View>
         <TouchableOpacity
                     style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7, marginTop:10}]}
                         //onPress={() => {
@@ -808,7 +835,7 @@ function report({navigation, route}) {
                     <Text style = {[styles.buttonText]}>
                         Submit <Ionicons name="enter-outline" size={20} color="black" />
                     </Text>
-                </TouchableOpacity>        
+                </TouchableOpacity>   
       </ScrollView>
                          </View>
                         </View>
