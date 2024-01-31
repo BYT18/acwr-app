@@ -1,5 +1,6 @@
 {
   "expo": {
+    "jsEngine": "jsc",
     "name": "acwr-app",
     "slug": "acwr-app",
     "version": "1.0.0",
@@ -14,16 +15,17 @@
     "plugins": [
       "@react-native-firebase/app",
       [
-       "expo-build-properties",
+        "expo-build-properties",
         {
-         "ios": {
+          "ios": {
             "useFrameworks": "static"
           }
         }
       ]
     ],
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/5668fd3d-9cec-4670-a32e-3126f04af2d5"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -49,6 +51,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5668fd3d-9cec-4670-a32e-3126f04af2d5"
+      }
+    },
+    "runtimeVersion": "1.0.0"
   }
 }

@@ -8,9 +8,9 @@
     <true/>
     <key>EXUpdatesLaunchWaitMs</key>
     <integer>0</integer>
-    <key>EXUpdatesSDKVersion</key>
-    <string>45.0.0</string>
     <key>EXUpdatesURL</key>
-    <string>https://exp.host/@kosaran/acwr-app</string>
+    <string>https://u.expo.dev/5668fd3d-9cec-4670-a32e-3126f04af2d5</string>
+    <key>EXUpdatesRuntimeVersion</key>
+    <string>1.0.0</string>
   </dict>
 </plist>

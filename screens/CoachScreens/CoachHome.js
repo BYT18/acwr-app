@@ -174,10 +174,10 @@ function CoachHome({navigation, route}) {
         const docSnap = await getDoc(docRef);
         graphData = docSnap.data().values
         datedata = docSnap.data().dates
-        // console.log(datedata)
+        console.log(datedata)
         datedescriptions = docSnap.data().description
         datecomments = docSnap.data().comments
-        // console.log(datecomments)
+        //console.log(datecomments)
         resetDotData() //this function resets the dot datas
         resetOnChange() //this function resets the filter array
         filterDatabyDate()
@@ -243,11 +243,16 @@ function CoachHome({navigation, route}) {
     
     const fetchDotData = (index) => {
         setDotSelected(!dotSelected)
-        setACWR(graphData[indices[index]].toFixed(2));
-        setDate(datedata[indices[index]]);
-        // console.log(datecomments)
-        setCommentsDate(datecomments[indices[index]])
-        setDescriptionsDate(datedescriptions[indices[index]])
+        //setACWR(graphData[indices[index]].toFixed(2));
+        //console.log(graphData[index])
+        //setACWR(graphData[indices[index]]);
+        setACWR(graphData[index].toFixed(2));
+        setCommentsDate(datecomments[index])
+        setDescriptionsDate(datedescriptions[index])
+        //setDate(datedata[indices[index]]);
+        //console.log(datecomments)
+        //setCommentsDate(datecomments[indices[index]])
+        //setDescriptionsDate(datedescriptions[indices[index]])
         //indices[index] gives the index of the original array
     }
 
@@ -300,11 +305,11 @@ function CoachHome({navigation, route}) {
     const getGraphDatabyIndex = () => {
       for(var x=0, len=indices.length; x < len; x++){
         filteredacwr.push(graphData[indices[x]])
-        //gData.push(graphData[indices[x]])
+        gData.push(graphData[indices[x]])
     } 
     }
 
-    // filterDatabyDate()
+    //filterDatabyDate()
 
     const fetchAthleteChange = (item) => {
       //async function fetchAthleteChange(item){
@@ -492,8 +497,8 @@ function CoachHome({navigation, route}) {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={styles.subheadingText}>{clickedPerson}</Text>
-                        {!isLoading && filteredacwr?.length > 0? (
-                          /*{/*!isLoading ? ( */
+                        {/*{!isLoading && filteredacwr?.length > 0? (*/}
+                        {!isLoading ? (
                         <View>
                             <Text style={[styles.subheading, {textAlign: 'center'}]}>{athleteName}</Text>
                             <LineChart
@@ -503,8 +508,8 @@ function CoachHome({navigation, route}) {
                         data={{
                         datasets: [
                             {
-                            data: filteredacwr
-                            //data: graphData
+                            //data: filteredacwr
+                            data: graphData
                           
                             }
                         ]

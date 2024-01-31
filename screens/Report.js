@@ -705,13 +705,13 @@ function report({navigation, route}) {
         
          
             <ScrollView style={[{paddingHorizontal: 12, flex:1}]}>
-        <View style={[{flex:1, flexDirection:'collumn'}]}>
+        {/*<View style={[{flex:1, flexDirection:'collumn'}]}>
         <Text style = {[styles.titleText]}>
                                         Injuries
                                     </Text>
           <View style={[{flex:1, paddingTop: 16, paddingBottom: 8}]}>
             
-            {renderLabel('Select area', isFocus)}
+            {renderLabel('Select area', isFocus)}*/}
             {/*<Dropdown
               style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
               placeholderStyle={styles.placeholderStyle}
@@ -741,7 +741,7 @@ function report({navigation, route}) {
                 />
               )}
               />*/}
-              <TextInput
+              {/*<TextInput
                                         style={styles.input}
                                         onChangeText={setInjBox}
                                         value={injBox}
@@ -770,7 +770,7 @@ function report({navigation, route}) {
             >
               <Text style={{color:'white', alignSelf:'center', fontSize:16, fontWeight:'700'}}> Add Injury </Text>
             </TouchableOpacity>
-          </View>
+        </View>
         <FlatList
           data={injuries}
           width='100%'
@@ -794,7 +794,7 @@ function report({navigation, route}) {
                     <Text style = {[styles.buttonText]}>
                         Remove Injury
                     </Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
         <TouchableOpacity
                     style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7, marginTop:10}]}
                         //onPress={() => {

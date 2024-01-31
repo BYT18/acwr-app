@@ -226,7 +226,8 @@ function Home({navigation, route}) {
         data: global.data.acwr.slice(-7)
       },
       {
-        labels: allTimeLabels(global.data.acwr.length),
+        //labels: allTimeLabels(global.data.acwr.length),
+        labels: allTimeLabels(30),
         data: global.data.acwr
       },
     ];
