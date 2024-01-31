@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   
+=======
+	"expo.jsEngine": "hermes",
+>>>>>>> 6766165d76888e3e6aae84ec1c743663b3f66f42
   "ios.useFrameworks": "static"
 }
 
