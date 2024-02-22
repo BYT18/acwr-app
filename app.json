@@ -19,23 +19,14 @@
         "expo-build-properties",
         {
           "ios": {
-<<<<<<< HEAD
             "useFrameworks": "static"
-=======
-            "useFrameworks": "static",
-            "jsEngine": "hermes"
->>>>>>> 6766165d76888e3e6aae84ec1c743663b3f66f42
           }
         }
       ]
     ],
     "updates": {
       "fallbackToCacheTimeout": 0,
-<<<<<<< HEAD
       "url": "https://u.expo.dev/5668fd3d-9cec-4670-a32e-3126f04af2d5"
-=======
-      "url": "https://u.expo.dev/6bdf914d-361a-4469-b7cd-c9de1347e5f8"
->>>>>>> 6766165d76888e3e6aae84ec1c743663b3f66f42
     },
     "assetBundlePatterns": [
       "**/*"
@@ -64,11 +55,7 @@
     },
     "extra": {
       "eas": {
-<<<<<<< HEAD
         "projectId": "5668fd3d-9cec-4670-a32e-3126f04af2d5"
-=======
-        "projectId": "6bdf914d-361a-4469-b7cd-c9de1347e5f8"
->>>>>>> 6766165d76888e3e6aae84ec1c743663b3f66f42
       }
     },
     "runtimeVersion": "1.0.0"

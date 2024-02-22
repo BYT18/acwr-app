@@ -228,7 +228,8 @@ function Home({navigation, route}) {
       {
         //labels: allTimeLabels(global.data.acwr.length),
         labels: allTimeLabels(30),
-        data: global.data.acwr
+        //slice for the last 30days
+        data: global.data.acwr.slice(-30)
       },
     ];
     

@@ -764,7 +764,6 @@ function report({navigation, route}) {
           tapToSeek
           //thumbTintColor = 'dodgerblue'
         />
-<<<<<<< HEAD
         <View style={[{flex:1, marginVertical:10, paddingLeft:5, paddingTop: 16, marginHorizontal: 20}]}>
             <TouchableOpacity onPress={() => updateInj()} activeOpacity={0.7} style={[styles.saveButton,{backgroundColor: value == null ? 'grey' : 'black'}]} 
             //</View>disabled={value == null ? true : false}
@@ -772,9 +771,6 @@ function report({navigation, route}) {
               <Text style={{color:'white', alignSelf:'center', fontSize:16, fontWeight:'700'}}> Add Injury </Text>
             </TouchableOpacity>
         </View>
-=======
-
->>>>>>> 6766165d76888e3e6aae84ec1c743663b3f66f42
         <FlatList
           data={injuries}
           width='100%'
@@ -809,38 +805,12 @@ function report({navigation, route}) {
                         () => {injuries.pop()
                         setInjuries(injuries)
                     setRefresh(!refresh)}
-<<<<<<< HEAD
                     }
                 >
                     <Text style = {[styles.buttonText]}>
                         Remove Injury
                     </Text>
         </TouchableOpacity>*/}
-=======
-                    } activeOpacity={0.7} style={[{
-                        backgroundColor: '#000',
-                        justifyContent: 'center',
-                        //marginRight: 20,
-                        shadowColor: "#000",
-                        shadowOffset: {
-                            width: 0,
-                            height: 2,
-                        },
-                        shadowOpacity: 0.25,
-                        shadowRadius: 3.84,
-                        elevation: 5,
-                        borderRadius: 10,
-                        height: 45,
-                        marginHorizontal: 10,
-                        paddingHorizontal: 10,
-                        marginVertical: 10,
-                    }]} 
-            //</View>disabled={value == null ? true : false}
-            >
-              <Text style={{color:'white', alignSelf:'center', fontSize:16, fontWeight:'700'}}> Remove Injury </Text>
-            </TouchableOpacity>
-        </View>
->>>>>>> 6766165d76888e3e6aae84ec1c743663b3f66f42
         <TouchableOpacity
                     style={[{ opacity: 1 }, {backgroundColor: 'white', borderRadius: 8, height:45, flex:1, borderColor:'black', borderWidth: 2, paddingTop: 7, marginTop:10}]}
                         //onPress={() => {
